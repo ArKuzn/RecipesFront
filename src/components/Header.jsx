@@ -18,7 +18,7 @@ export default class Total extends Component {
                         <Link to="/profile">Profile</Link>
                     </li>
                     <li>
-                        <Link to="/recipe">Recipe</Link>
+                        <Link to="/recipes">Recipe</Link>
                     </li>
                     <li>
                         <Link to="/topics">Topics</Link>
