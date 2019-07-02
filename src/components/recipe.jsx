@@ -47,7 +47,7 @@ export default class Recipe extends Component {
                         <span class="item__text-description-span">Описание: {this.props.steps}</span>
                     </div>
                     <div class="item__text-author">
-                        <span class="item__text-author-link">Автор:<Link class="item__text-name-p-a" to={"users/" + this.props.author}>
+                        <span class="item__text-author-link">Автор:<Link class="item__text-name-p-a" to={"profile/" + this.props.author}>
                             {this.props.author}
                         </Link></span>
                     </div>

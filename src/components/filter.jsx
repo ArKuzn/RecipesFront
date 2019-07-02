@@ -8,8 +8,30 @@ export default class Filter extends Component {
         this.handleInput = this.handleInput.bind(this);
         this.state = {
             data: {},
-            errors: {}
+            errors: {},
+            ingredients: {}
         }
+    }
+    componentDidMount() {
+        let url = new URL('http://localhost:3000/api/recipes/ingredients')
+        fetch(url, { method: "GET" })
+            .then(response => {
+                debugger
+                if (response.ok) {
+                    return response.json();
+                }
+
+                throw new Error("Network response was not ok");
+            })
+            .then(json => {
+                this.setState({ ingredients: json.recipes });
+                debugger
+
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
     showImages = () => {
         // let test = JSON.parse(this.props.images);
@@ -37,10 +59,14 @@ export default class Filter extends Component {
         ingredients = ingredients.substr(0, ingredients.length - 1)
         let order_field = event.target.elements['rank'].value.split('-')[0];
         let direction = event.target.elements['rank'].value.split('-')[1];
-        let duration = event.target.elements['durationFrom'].value + '-' + event.target.elements['durationTo'].value;
+        let duration = '';
+        if (event.target.elements['durationFrom'].value || event.target.elements['durationTo'].value) {
+            duration = event.target.elements['durationFrom'].value + '-' + event.target.elements['durationTo'].value;
+        }
+
         let params = { ingredients: ingredients, order_field, direction, duration: duration }
         debugger
-        let url = new URL('http://localhost:3000/api/recipes/filter/da')
+        let url = new URL('http://localhost:3000/api/recipes/filter')
         url.search = new URLSearchParams(params)
         fetch(url, { method: "GET" })
             .then(response => {
@@ -53,6 +79,7 @@ export default class Filter extends Component {
             })
             .then(json => {
                 debugger
+                this.props.onApplyFilter(json);
                 console.log('recipes is' + JSON.stringify(this.recipes));
                 this.setState({ recipes: json });
                 console.log('recipes state is' + JSON.stringify(this.state.recipes));
@@ -80,6 +107,18 @@ export default class Filter extends Component {
         //     },
         // }));
     };
+    ingredientsInput = () => {
+        let ingredientCheckboxs = [];
+        for (let ingredient in this.state.ingredients) {
+            ingredientCheckboxs.push(
+                <label class="ingredient1">
+                    <input type="checkbox" name="ingredients" value={this.state.ingredients[ingredient].title} /> {this.state.ingredients[ingredient].title}
+                </label>
+            )
+            debugger
+        }
+        return ingredientCheckboxs;
+    }
     render() {
         const value = this.props.test;
         return (
@@ -101,12 +140,13 @@ export default class Filter extends Component {
                         </select>
                     </label>
                     <div class="ingredients">
-                        <label class="ingredient1">
+                        {this.ingredientsInput()}
+                        {/* <label class="ingredient1">
                             <input type="checkbox" name="ingredients" value="Car" onChange={this.handleInput} /> I have a car
                     </label>
                         <label class="ingredient2">
                             <input type="checkbox" name="ingredients" value="Car2" onChange={this.handleInput} /> I have a car2
-                    </label>
+                    </label> */}
                     </div>
                     <input type="submit" />
                 </form>

@@ -30,7 +30,7 @@ export default class Recipes extends Component {
                 });
         }
         else {
-            fetch("http://localhost:3000/api/recipes/filter/ad", { method: "GET" })
+            fetch("http://localhost:3000/api/recipes/filter", { method: "GET" })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -73,7 +73,7 @@ export default class Recipes extends Component {
                         steps={this.state.recipes[i].steps}
                         id={this.state.recipes[i].id}
                         author={this.state.recipes[i].author}
-                        duration={this.state.recipes[i].author}
+                        duration={this.state.recipes[i].duration}
                     >
                     </Recipeitem>)
             }
@@ -93,7 +93,9 @@ export default class Recipes extends Component {
             return result;
         }
     }
-
+    handleFilter = (recipes) => {
+        this.setState({ recipes: recipes });
+    }
     render() {
         var value;
         if (this.props.match.params.id) {
@@ -106,9 +108,9 @@ export default class Recipes extends Component {
             <div>
                 <Total />
 
-                <h2>Recipe {value}</h2>
+                <h2>Recipes {value}</h2>
                 {this.showRecipes()}
-                <Filter />
+                <Filter onApplyFilter={this.handleFilter} />
             </div>
 
         )

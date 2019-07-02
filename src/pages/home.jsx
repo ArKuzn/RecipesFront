@@ -11,7 +11,7 @@ export default class Home extends Component {
         }
     }
     componentDidMount() {
-        fetch("http://localhost:3000/api/recipes/filter/ad", { method: "GET" })
+        fetch("http://localhost:3000/api/recipes/filter", { method: "GET" })
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -20,22 +20,7 @@ export default class Home extends Component {
                 throw new Error("Network response was not ok");
             })
             .then(json => {
-                console.log('response is ' + JSON.stringify(json));
-                console.log('recipes is' + this.recipes);
-                //   for(let i = 0;i<json.length;i++){
-                //   this.recipes.push({
-                //     title: json[i].title,
-                //     image: json[i].images,
-                //     difficult: json[i].difficult,
-                //     calories: json[i].calories,
-                //     time: json[i].time,
-                //     id:json[i]._id
-                //   });
-                //   }
-                //   this.recipes.length=8;
-                console.log('recipes is' + JSON.stringify(this.recipes));
                 this.setState({ recipes: json });
-                console.log('recipes state is' + JSON.stringify(this.state.recipes));
             })
             .catch(error => {
                 console.log(error);
