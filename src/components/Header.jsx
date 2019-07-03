@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import LoginPopup from "../components/login"
 import cookie from 'react-cookies'
+import ControllerLoginPopup from '../components/dialoglogincontrol'
 export default class Total extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +23,7 @@ export default class Total extends Component {
         if (this.state.Auth) {
             return (<Link to="/profile">Profile</Link>)
         }
-        return (<LoginPopup onAuth={this.CheckAuth}></LoginPopup>)
+        return (<ControllerLoginPopup onAuth={this.CheckAuth}></ControllerLoginPopup>)
     }
     render() {
         const value = this.props.test;
@@ -43,7 +43,7 @@ export default class Total extends Component {
                         {this.ProfileController()}
                     </li>
                     <li>
-                        <Link to="/recipes">Recipe</Link>
+                        <Link to="/recipes">Recipes</Link>
                     </li>
                     <li>
                         <Link to="/topics">Topics</Link>

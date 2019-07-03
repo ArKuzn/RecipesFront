@@ -16,7 +16,6 @@ export default class Filter extends Component {
         let url = new URL('http://localhost:3000/api/recipes/ingredients')
         fetch(url, { method: "GET" })
             .then(response => {
-                debugger
                 if (response.ok) {
                     return response.json();
                 }
@@ -25,8 +24,6 @@ export default class Filter extends Component {
             })
             .then(json => {
                 this.setState({ ingredients: json.recipes });
-                debugger
-
 
             })
             .catch(error => {
@@ -65,12 +62,12 @@ export default class Filter extends Component {
         }
 
         let params = { ingredients: ingredients, order_field, direction, duration: duration }
-        debugger
+
         let url = new URL('http://localhost:3000/api/recipes/filter')
         url.search = new URLSearchParams(params)
         fetch(url, { method: "GET" })
             .then(response => {
-                debugger
+
                 if (response.ok) {
                     return response.json();
                 }
@@ -78,7 +75,7 @@ export default class Filter extends Component {
                 throw new Error("Network response was not ok");
             })
             .then(json => {
-                debugger
+
                 this.props.onApplyFilter(json);
                 console.log('recipes is' + JSON.stringify(this.recipes));
                 this.setState({ recipes: json });
@@ -115,7 +112,7 @@ export default class Filter extends Component {
                     <input type="checkbox" name="ingredients" value={this.state.ingredients[ingredient].title} /> {this.state.ingredients[ingredient].title}
                 </label>
             )
-            debugger
+
         }
         return ingredientCheckboxs;
     }

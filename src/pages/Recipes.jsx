@@ -4,15 +4,44 @@ import Total from "../components/Header"
 import Recipeitem from "../components/minirecipe"
 import Recipe from "../components/recipe"
 import Filter from "../components/filter"
+import cookie from 'react-cookies'
 export default class Recipes extends Component {
     constructor(props) {
         super(props);
         this.state = {
             recipes: {},
-            recipe: {}
+            recipe: {},
+            Auth: false,
+            favorites: []
         }
     }
     componentDidMount() {
+        if (cookie.load('token')) {
+            this.setState({ Auth: true });
+            let params = { token: cookie.load('token') }
+            let url = new URL('http://localhost:3000/api/users/profile')
+            url.search = new URLSearchParams(params)
+            fetch(url, { method: "GET" })
+                .then(response => {
+                    debugger
+                    if (response.ok) {
+                        return response.json();
+                    }
+
+                    throw new Error("Network response was not ok");
+                })
+                .then(json => {
+                    debugger
+                    this.setState({ favorites: json.favorites });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        }
+
+
+
         if (this.props.match.params.id) {
             fetch(`http://localhost:3000/api/recipes/${this.props.match.params.id}`, { method: "GET" })
                 .then(response => {
@@ -39,8 +68,6 @@ export default class Recipes extends Component {
                     throw new Error("Network response was not ok");
                 })
                 .then(json => {
-                    console.log('response is ' + JSON.stringify(json));
-                    console.log('recipes is' + this.recipes);
                     //   for(let i = 0;i<json.length;i++){
                     //   this.recipes.push({
                     //     title: json[i].title,
@@ -52,9 +79,7 @@ export default class Recipes extends Component {
                     //   });
                     //   }
                     //   this.recipes.length=8;
-                    console.log('recipes is' + JSON.stringify(this.recipes));
                     this.setState({ recipes: json });
-                    console.log('recipes state is' + JSON.stringify(this.state.recipes));
                 })
                 .catch(error => {
                     console.log(error);
@@ -62,9 +87,19 @@ export default class Recipes extends Component {
         }
     }
     showRecipes = () => {
+        let token = cookie.load('token');
+
         if (this.state.recipes[0]) {
             let Recipes = [];
             for (let i = 0; i < this.state.recipes.length; i++) {
+                let favorite = false;
+                for (let recipeId of this.state.favorites) {
+                    debugger
+                    if (this.state.recipes[i].id == recipeId) {
+                        favorite = true;
+                    }
+                }
+
                 Recipes.push(
                     <Recipeitem
                         title={this.state.recipes[i].title}
@@ -74,13 +109,27 @@ export default class Recipes extends Component {
                         id={this.state.recipes[i].id}
                         author={this.state.recipes[i].author}
                         duration={this.state.recipes[i].duration}
+                        favorite={favorite}
+                        token={token}
                     >
                     </Recipeitem>)
             }
-            return Recipes;
+            return (
+                <div>
+                    {Recipes}
+                    <Filter onApplyFilter={this.handleFilter} ></Filter >
+                </div>
+            )
         }
         if (this.state.recipe.images) {
             let result;
+            let favorite = false;
+            for (let recipeid of this.state.favorites) {
+                if (this.state.recipe.id == recipeid) {
+                    favorite = true;
+                    break
+                }
+            }
             result = <Recipe
                 title={this.state.recipe.title}
                 images={this.state.recipe.images}
@@ -89,6 +138,8 @@ export default class Recipes extends Component {
                 id={this.state.recipe.id}
                 author={this.state.recipe.author}
                 duration={this.state.recipe.duration}
+                token={token}
+                favorite={favorite}
             ></Recipe>
             return result;
         }
@@ -110,7 +161,7 @@ export default class Recipes extends Component {
 
                 <h2>Recipes {value}</h2>
                 {this.showRecipes()}
-                <Filter onApplyFilter={this.handleFilter} />
+
             </div>
 
         )

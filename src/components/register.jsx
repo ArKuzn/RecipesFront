@@ -13,38 +13,44 @@ export default class RegisterPopup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: false,
+            open: true,
             wrongLogin: false,
             wrongPass: false,
             error: '',
-            Redirect: false
-            // setOpen: false
+            Redirect: false,
+            show: true
         }
-
+        debugger
+        if (props.open) {
+            this.setState({ open: props.open })
+        }
 
     }
     handleClickOpen = () => {
-        // this.state.setOpen(true);
-        // this.setState({ setOpen: true });
         this.setState({ wrongLogin: false, wrongPass: false, error: '' });
         this.setState({ open: true });
     }
     handleSubmit = (event) => {
-        // this.state.setOpen(true);
-        // event.target.elements['name'].value
         event.preventDefault();
         this.setState({ wrongLogin: false, wrongPass: false, error: '' });
         debugger
         let params = { ...event.target };
+        params[0] = event.target[0].files[0];
         let formData = new FormData()
         for (var k in params) {
+            if (event.target[k].id == "avatar") {
+                formData.append(event.target[k].id, params[k]);
+                continue
+            }
             formData.append(event.target[k].id, params[k].value);
 
         }
 
         fetch('http://localhost:3000/api/users/registration', {
             method: 'POST',
-            body: formData
+
+            body: formData,
+
         })
             .then(response => {
                 debugger
@@ -65,97 +71,72 @@ export default class RegisterPopup extends Component {
                 }
                 if (json.token) {
                     cookie.save('token', json.token, { path: '/' })
-                    // alert(cookie.load('token'));
-                    // this.props.onAuth();
-                    this.setState({ Redirect: true });
+                    this.props.onClose(true);
                     this.setState({ open: false });
-                    debugger
+
                 }
 
             })
             .catch(error => {
                 console.log(error);
             });
-
-
-
-
-        // alert(event.target.elements['name'].value);
     }
     handleClose = () => {
-        // this.state.setOpen(false);
-        // this.setState({ setOpen: false });
+        this.props.onClose(true);
         this.setState({ open: false });
+
     }
-    Redirect = () => {
-        if (this.state.Redirect) {
-            this.props.onRedirect();
-            this.setState({ Redirect: false });
-        }
+    handleChange = () => {
+        this.props.onLogin(true);
     }
     render() {
-        const value = this.props.test;
-        // const [open, setOpen] = React.useState(false);
         return (
             <div>
-                <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                    Registration
-            </Button>
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <form class="Register__form" onSubmit={this.handleSubmit} id="registrationForm">
-                        <DialogTitle id="form-dialog-title">Registration</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Be sure to fill in the fields with a star
-                </DialogContentText>
-                            <span class="Register__form-avatar-span">avatar: </span> <input type="file" id="avatar" />
-                            <TextField
-                                required
-                                error={this.state.wrongLogin}
-                                autoFocus
-                                margin="dense"
-                                id="login"
-                                label="Login"
-                                type="text"
-                                fullWidth
-                            />
-                            <TextField
-                                required
-                                error={this.state.wrongPass}
-                                margin="dense"
-                                id="password"
-                                label="Password"
-                                type="password"
-                                fullWidth
-                            />
-                            {/* <TextField
-                                margin="dense"
-                                id="name"
-                                label="Name"
-                                type="text"
-                                fullWidth
-                            />
-                            <TextField
-                                margin="dense"
-                                id="about"
-                                label="About"
-                                multiline
-                                fullWidth
-                            /> */}
-                        </DialogContent>
-                        <DialogActions>
-                            <span class="error">{this.state.error}</span>
-                            <Button onClick={this.handleClose} color="primary">
-                                Cancel
-                </Button>
-                            <Button type="submit" color="primary">
-                                Register
-                </Button>
+                <div>
+                    <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                        <form class="Register__form" onSubmit={this.handleSubmit} id="registrationForm">
+                            <DialogTitle id="form-dialog-title">Registration</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Be sure to fill in the fields with a star
+                    </DialogContentText>
+                                <span class="Register__form-avatar-span">avatar: </span> <input type="file" id="avatar" />
+                                <TextField
+                                    required
+                                    error={this.state.wrongLogin}
+                                    autoFocus
+                                    margin="dense"
+                                    id="login"
+                                    label="Login"
+                                    type="text"
+                                    fullWidth
+                                />
+                                <TextField
+                                    required
+                                    error={this.state.wrongPass}
+                                    margin="dense"
+                                    id="password"
+                                    label="Password"
+                                    type="password"
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <span class="error">{this.state.error}</span>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Cancel
+                    </Button>
+                                <Button onClick={this.handleChange} color="primary">
+                                    Login
+                    </Button>
+                                <Button type="submit" color="primary">
+                                    Register
+                    </Button>
 
-                        </DialogActions>
-                    </form>
-                </Dialog>
-                {this.Redirect()}
+                            </DialogActions>
+                        </form>
+                    </Dialog>
+                </div>
             </div>
         )
     }

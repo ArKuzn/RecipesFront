@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import FavoriteButton from "../components/favorite-button"
 export default class Recipe extends Component {
     constructor(props) {
         super(props);
@@ -30,6 +30,7 @@ export default class Recipe extends Component {
                             {this.props.title}
                         </p>
                     </div>
+                    <FavoriteButton token={this.props.token} favorite={this.props.favorite} id={this.props.id}></FavoriteButton>
                     <div class="item__text-ingredients">
                         <span class="item__text-ingredients-span">
                             Ингредиенты: {this.props.ingredients}

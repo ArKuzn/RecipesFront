@@ -18,8 +18,7 @@ export default class LoginPopup extends Component {
             wrongLogin: false,
             wrongPass: false,
             error: '',
-
-            // setOpen: false
+            lyl: true
         }
 
     }
@@ -28,23 +27,17 @@ export default class LoginPopup extends Component {
         this.setState({ open: false });
     }
     handleClickOpen = () => {
-        // this.state.setOpen(true);
-        // this.setState({ setOpen: true });
         this.setState({ wrongLogin: false, wrongPass: false, error: '' });
         this.setState({ open: true });
     }
     handleSubmit = (event) => {
-        // this.state.setOpen(true);
-        // event.target.elements['name'].value
         this.setState({ wrongLogin: false, wrongPass: false, error: '' });
         event.preventDefault();
         var formBody = [];
         formBody.push('login' + '=' + event.target.elements['login'].value)
         formBody.push('password' + '=' + event.target.elements['password'].value)
-        // password: event.target.elements['password'].value
         formBody = formBody.join("&");
         console.log(JSON.stringify(formBody));
-        // let url = new URL('http://localhost:3000/api/users/login');
         fetch('http://localhost:3000/api/users/login', {
             method: "POST",
             headers: {
@@ -73,38 +66,27 @@ export default class LoginPopup extends Component {
                 }
                 if (json.token) {
                     cookie.save('token', json.token, { path: '/' })
-                    // alert(cookie.load('token'));
-                    this.props.onAuth();
                     this.setState({ open: false });
-
+                    this.props.onClose(true);
                 }
 
             })
             .catch(error => {
                 console.log(error);
             });
-
-
-
-
-        // alert(event.target.elements['name'].value);
     }
     handleClose = () => {
-        // this.state.setOpen(false);
-        // this.setState({ setOpen: false });
-        // alert('yay');
-        this.props.onAuth();
+        this.props.onClose(true);
         this.setState({ open: false });
+    }
+    handleChange = () => {
+        this.props.onRegister(true);
     }
     render() {
         const value = this.props.test;
-        // const [open, setOpen] = React.useState(false);
         return (
             <div>
-                <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                    Login/Register
-            </Button>
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={true} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <form class="Login__form" onSubmit={this.handleSubmit}>
                         <DialogTitle id="form-dialog-title">Login</DialogTitle>
                         <DialogContent>
@@ -134,9 +116,9 @@ export default class LoginPopup extends Component {
                             <Button onClick={this.handleClose} color="primary">
                                 Cancel
                 </Button>
-                            <RegisterPopup onRedirect={this.handleClose}>
-                                onAuth={this.CheckAuth}
-                            </RegisterPopup>
+                            <Button onClick={this.handleChange} color="primary">
+                                Register
+                </Button>
                             <Button type="submit" color="primary">
                                 Login
                 </Button>
