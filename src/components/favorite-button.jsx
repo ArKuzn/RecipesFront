@@ -10,7 +10,22 @@ export default class FavoriteButton extends Component {
         }
     }
     componentDidMount() {
+        // debugger
+        // alert(`yay`);
         this.setState({ favorite: this.props.favorite })
+    }
+    // static getDerivedStateFromProps(props, state) {
+    //     debugger
+    //     // state.setState({ favorite: props.favorite })
+    // }
+
+    componentDidUpdate(prevProps) {
+        debugger
+        if (this.props.favorite != prevProps.favorite) {
+            this.setState({ favorite: this.props.favorite, id: this.props.id })
+        }
+        // alert(`yay2`);
+        // this.setState({ favorite: false })
     }
     ClickHandler = () => {
         //    localhost:3000/api/recipes/favorite/4
@@ -50,7 +65,8 @@ export default class FavoriteButton extends Component {
 
     }
     favoriteButton = () => {
-
+        debugger
+        // this.setState({ favorite: this.props.favorite });
         let text = (this.state.favorite) ? 'remove from favorite' : 'add to favorite'
         if (this.props.token)
             return (
@@ -69,6 +85,7 @@ export default class FavoriteButton extends Component {
     }
 
     render() {
+        debugger
         return (
             <div>
                 {this.favoriteButton()}

@@ -65,6 +65,7 @@ export default class Recipeitem extends Component {
     }
 
     render() {
+        debugger
         const value = this.props.test;
         return (
             <div class="list__item">
@@ -72,6 +73,13 @@ export default class Recipeitem extends Component {
                     <img class="item__image-img" src={'http://localhost:3000/api/' + this.props.images[0]} />
                 </div>
                 <div class="item__text">
+                    <div class="item__text-recipeId">
+                        <p class="item__text-name-p">
+
+                            Recipe {this.props.id}
+
+                        </p>
+                    </div>
                     <div class="item__text-name">
                         <p class="item__text-name-p">
                             <Link class="item__text-name-p-a" to={"recipes/" + this.props.id}>

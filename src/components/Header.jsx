@@ -21,9 +21,21 @@ export default class Total extends Component {
     }
     ProfileController = () => {
         if (this.state.Auth) {
-            return (<Link to="/profile">Profile</Link>)
+            return (
+                <Link to="/profile">Profile</Link>
+            )
         }
         return (<ControllerLoginPopup onAuth={this.CheckAuth}></ControllerLoginPopup>)
+    }
+    CreateController = () => {
+        if (this.state.Auth) {
+            return (
+                <li>
+                    <Link to="/create">Create recipe</Link>
+                </li>
+            )
+        }
+        return (<div></div>)
     }
     render() {
         const value = this.props.test;
@@ -42,6 +54,7 @@ export default class Total extends Component {
                         {/* <LoginPopup></LoginPopup> */}
                         {this.ProfileController()}
                     </li>
+                    {this.CreateController()}
                     <li>
                         <Link to="/recipes">Recipes</Link>
                     </li>
