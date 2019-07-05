@@ -130,6 +130,7 @@ export default class Recipes extends Component {
                     break
                 }
             }
+            debugger
             result = <Recipe
                 title={this.state.recipe.title}
                 images={this.state.recipe.images}

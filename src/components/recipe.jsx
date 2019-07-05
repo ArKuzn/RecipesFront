@@ -1,9 +1,30 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import FavoriteButton from "../components/favorite-button"
+import StepsShow from "../components/stepsShow"
 export default class Recipe extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            steps: ''
+        }
+    }
+    componentDidMount() {
+        fetch(`http://localhost:3000/api/recipes/steps/${this.props.id}`, { method: "GET" })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+
+                throw new Error("Network response was not ok");
+            })
+            .then(json => {
+                this.setState({ steps: json.steps });
+                debugger
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
     showImages = () => {
         // let test = JSON.parse(this.props.images);
@@ -52,6 +73,7 @@ export default class Recipe extends Component {
                             {this.props.author}
                         </Link></span>
                     </div>
+                    <StepsShow steps={this.state.steps}></StepsShow>
                 </div>
                 <div class="item__buttons">
                     <div class="item__buttons-button">

@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import clsx from 'clsx';
 import IngredientsInputs from '../components/ingredients'
 import StepsInputs from '../components/steps'
+import { DropzoneArea } from 'material-ui-dropzone'
 export default class CreateRecipeForm extends Component {
 
 
@@ -22,6 +23,8 @@ export default class CreateRecipeForm extends Component {
         super(props)
         this.state = {
             // setOpen: false
+            files: [],
+            stepsimages: []
         }
     }
 
@@ -63,14 +66,29 @@ export default class CreateRecipeForm extends Component {
         };
         debugger
         let formData = new FormData()
-        for (var k in params) {
-            // if (event.target[k].id == "avatar") {
-            //     formData.append(event.target[k].id, params[k]);
-            //     continue
-            // }
-            formData.append(k, params[k]);
-
+        for (let fileId in this.state.files) {
+            debugger
+            formData.append("images", this.state.files[fileId])
         }
+        for (let fileId in this.state.stepsimages) {
+            debugger
+            formData.append("stepsimages", this.state.stepsimages[fileId])
+        }
+        formData.append("ingredients", ingredients)
+        formData.append("title", event.target.elements["title"].value)
+        formData.append("calories", event.target.elements["calories"].value)
+        formData.append("difficult", event.target.elements["difficult"].value)
+        formData.append("duration", event.target.elements["duration"].value)
+        formData.append("steps", steps)
+        formData.append("token", cookie.load('token'))
+        debugger
+        // for (var k in params) {
+        //     formData.append(event.target[k].id, params[k].value);
+
+        // }
+
+
+
 
         fetch(`http://localhost:3000/api/recipes`, {
             method: 'POST',
@@ -103,31 +121,31 @@ export default class CreateRecipeForm extends Component {
             .catch(error => {
                 console.log(error);
             });
-
-
-
-
-
-
-
-
-
-
-
-
-        debugger
-        alert(`yay`);
     }
     handleClose = () => {
         this.props.onBack(true);
     }
-    handleChange = name => event => {
-        // this.setValues({ ...this.state.values, [name]: event.target.value });
-    };
+    handleChange(files) {
+        this.setState({
+            files: files
+        });
+    }
+    handleUploadStepImage = (file) => {
+        debugger
+        // this.state.stepImages.push({
+        //     name: file.name,
+        //     id: id
+        // })
+        this.state.stepsimages[file.id] = file.file;
+
+    }
     render() {
         // const [open, setOpen] = React.useState(false);
         return (
             <form class="Recipe_creator__form" onSubmit={this.handleSubmit}>
+                <DropzoneArea
+                    onChange={this.handleChange.bind(this)}
+                />
                 <TextField
                     margin="dense"
                     id="title"
@@ -154,7 +172,7 @@ export default class CreateRecipeForm extends Component {
                     type="number"
                 />
                 <IngredientsInputs></IngredientsInputs>
-                <StepsInputs></StepsInputs>
+                <StepsInputs onUploadStepImage={this.handleUploadStepImage}></StepsInputs>
                 <Button onClick={this.handleClose} color="primary">
                     Back to home
                 </Button>
