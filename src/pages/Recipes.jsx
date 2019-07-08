@@ -23,7 +23,7 @@ export default class Recipes extends Component {
             url.search = new URLSearchParams(params)
             fetch(url, { method: "GET" })
                 .then(response => {
-                    debugger
+                    // debugger
                     if (response.ok) {
                         return response.json();
                     }
@@ -31,7 +31,7 @@ export default class Recipes extends Component {
                     throw new Error("Network response was not ok");
                 })
                 .then(json => {
-                    debugger
+                    // debugger
                     this.setState({ favorites: json.favorites });
                 })
                 .catch(error => {
@@ -90,17 +90,19 @@ export default class Recipes extends Component {
         let token = cookie.load('token');
 
         if (this.state.recipes[0]) {
+            debugger
             let Recipes = [];
             for (let i = 0; i < this.state.recipes.length; i++) {
                 let favorite = false;
                 for (let recipeId of this.state.favorites) {
-                    debugger
+                    // debugger
                     if (this.state.recipes[i].id == recipeId) {
                         favorite = true;
                     }
                 }
 
                 Recipes.push(
+
                     <Recipeitem
                         title={this.state.recipes[i].title}
                         images={this.state.recipes[i].images}
@@ -130,7 +132,7 @@ export default class Recipes extends Component {
                     break
                 }
             }
-            debugger
+            // debugger
             result = <Recipe
                 title={this.state.recipe.title}
                 images={this.state.recipe.images}
@@ -141,6 +143,8 @@ export default class Recipes extends Component {
                 duration={this.state.recipe.duration}
                 token={token}
                 favorite={favorite}
+                difficult={this.state.recipe.difficult}
+                calories={this.state.recipe.calories}
             ></Recipe>
             return result;
         }

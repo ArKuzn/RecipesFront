@@ -20,7 +20,7 @@ export default class FavoriteButton extends Component {
     // }
 
     componentDidUpdate(prevProps) {
-        debugger
+        // debugger
         if (this.props.favorite != prevProps.favorite) {
             this.setState({ favorite: this.props.favorite, id: this.props.id })
         }
@@ -65,9 +65,10 @@ export default class FavoriteButton extends Component {
 
     }
     favoriteButton = () => {
-        debugger
+        // debugger
         // this.setState({ favorite: this.props.favorite });
         let text = (this.state.favorite) ? 'remove from favorite' : 'add to favorite'
+        debugger
         if (this.props.token)
             return (
                 <div class="item__text-favorite">
@@ -85,7 +86,7 @@ export default class FavoriteButton extends Component {
     }
 
     render() {
-        debugger
+        // debugger
         return (
             <div>
                 {this.favoriteButton()}

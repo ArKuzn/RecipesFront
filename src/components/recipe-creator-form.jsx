@@ -24,103 +24,17 @@ export default class CreateRecipeForm extends Component {
         this.state = {
             // setOpen: false
             files: [],
-            stepsimages: []
+            stepsimages: [],
+            recipe: {}
         }
     }
+    componentDidMount() {
+        if (this.props.id) {
 
+        }
+    }
     handleSubmit = (event) => {
-        debugger
-        event.preventDefault();
-        // console.log(event.target.elements['title'].value);
-        let ingredients = [];
-        let steps = [];
-        // console.log(event.target.elements[`ingredient`])
-        for (let element in event.target.elements) {
-            try {
-                if (event.target.elements[element].id.split(" ")[0] == "ingredient") {
-                    ingredients.push(event.target.elements[element].value)
-                }
-                if (event.target.elements[element].id.split(" ")[0] == "step") {
-                    steps.push(event.target.elements[element].value)
-                }
-            } catch{
-
-            }
-        }
-        ingredients.length = ingredients.length - 1;
-        steps.length = steps.length - 1;
-        ingredients = ingredients.join('|');
-        steps = steps.join('|');
-
-
-
-
-        let params = {
-            title: event.target.elements["title"].value,
-            calories: event.target.elements["calories"].value,
-            difficult: event.target.elements["difficult"].value,
-            duration: event.target.elements["duration"].value,
-            ingredients: ingredients,
-            steps: steps,
-            token: cookie.load('token')
-        };
-        debugger
-        let formData = new FormData()
-        for (let fileId in this.state.files) {
-            debugger
-            formData.append("images", this.state.files[fileId])
-        }
-        for (let fileId in this.state.stepsimages) {
-            debugger
-            formData.append("stepsimages", this.state.stepsimages[fileId])
-        }
-        formData.append("ingredients", ingredients)
-        formData.append("title", event.target.elements["title"].value)
-        formData.append("calories", event.target.elements["calories"].value)
-        formData.append("difficult", event.target.elements["difficult"].value)
-        formData.append("duration", event.target.elements["duration"].value)
-        formData.append("steps", steps)
-        formData.append("token", cookie.load('token'))
-        debugger
-        // for (var k in params) {
-        //     formData.append(event.target[k].id, params[k].value);
-
-        // }
-
-
-
-
-        fetch(`http://localhost:3000/api/recipes`, {
-            method: 'POST',
-
-            body: formData,
-
-        })
-            .then(response => {
-                debugger
-                if (response.ok) {
-                    return response.json();
-                }
-
-                throw new Error("Network response was not ok");
-            })
-            .then(json => {
-                debugger
-                if (!json.err_field) {
-                    this.props.onClose(true);
-                }
-                else {
-                    for (let err_field of json.err_field) {
-                        if (err_field == "password") {
-                            this.setState({ err_pass: true });
-                        }
-                    }
-                }
-
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        this.props.onSubmit(event, this.state.files, this.state.stepsimages)
     }
     handleClose = () => {
         this.props.onBack(true);
@@ -141,6 +55,8 @@ export default class CreateRecipeForm extends Component {
     }
     render() {
         // const [open, setOpen] = React.useState(false);
+        debugger
+        console.log(this.state.recipe)
         return (
             <form class="Recipe_creator__form" onSubmit={this.handleSubmit}>
                 <DropzoneArea
@@ -151,28 +67,36 @@ export default class CreateRecipeForm extends Component {
                     id="title"
                     label="Title"
                     type="text"
-
+                    defaultValue={this.props.title}
                 />
                 <TextField
                     margin="dense"
                     id="calories"
                     label="Calories"
                     type="number"
+                    defaultValue={this.props.calories}
                 />
                 <TextField
                     margin="dense"
                     id="difficult"
                     label="Difficult"
                     type="number"
+                    defaultValue={this.props.difficult}
                 />
                 <TextField
                     margin="dense"
                     id="duration"
                     label="Duration"
                     type="number"
+                    defaultValue={this.props.duration}
                 />
-                <IngredientsInputs></IngredientsInputs>
-                <StepsInputs onUploadStepImage={this.handleUploadStepImage}></StepsInputs>
+                <IngredientsInputs
+                    ingredients={this.props.ingredients}
+                ></IngredientsInputs>
+                <StepsInputs
+                    steps={this.props.steps}
+                    onUploadStepImage={this.handleUploadStepImage}
+                ></StepsInputs>
                 <Button onClick={this.handleClose} color="primary">
                     Back to home
                 </Button>

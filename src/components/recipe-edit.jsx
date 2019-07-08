@@ -1,45 +1,54 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import user from "../components/user"
-import Total from "../components/Header"
-import ProfileCard from "../components/profileCard"
+import user from "./user"
+import Total from "./Header"
+import ProfileCard from "./profileCard"
 import cookie from 'react-cookies'
-import UpdateUserForm from '../components/update-user-form'
+import UpdateUserForm from './update-user-form'
 import { Button } from '@material-ui/core';
-import CreateRecipeForm from '../components/recipe-creator-form'
-export default class RecipeCreate extends React.Component {
+import CreateRecipeForm from './recipe-creator-form'
+export default class RecipeEdit extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            showPage: false,
             logout: false,
-            token: true,
             update: false,
-            redirect: false
+            redirect: false,
             // setOpen: false
         }
     }
     componentDidMount() {
-        let url;
+        // debugger
 
-        if (!cookie.load('token')) {
-            this.setState({ redirect: true });
-        }
+
+
 
     }
     Back = () => {
         this.setState({ redirect: true })
     }
     showPage = () => {
+        // debugger
 
         return (
             <div>
-                <CreateRecipeForm onSubmit={this.handeSubmit} onBack={this.Back}></CreateRecipeForm>
+                <CreateRecipeForm
+                    onSubmit={this.handleSubmit}
+                    onBack={this.Back}
+                    id={this.props.id}
+                    author={this.props.author}
+                    title={this.props.title}
+                    images={this.props.images}
+                    ingredients={this.props.ingredients}
+                    steps={this.props.steps}
+                    duration={this.props.duration}
+                    difficult={this.props.difficult}
+                    calories={this.props.calories}
+                ></CreateRecipeForm>
 
             </div>
         )
-
     }
     Redirect = () => {
         if (this.state.redirect) {
@@ -51,10 +60,7 @@ export default class RecipeCreate extends React.Component {
             )
         }
     }
-    handleClick = (event, files, stepsimages) => {
-        alert(`yay`)
-    }
-    handeSubmit = (event, files, stepsimages) => {
+    handleSubmit = (event, files, stepsimages) => {
         debugger
         event.preventDefault();
         // console.log(event.target.elements['title'].value);
@@ -116,8 +122,8 @@ export default class RecipeCreate extends React.Component {
 
 
 
-        fetch(`http://localhost:3000/api/recipes`, {
-            method: 'POST',
+        fetch(`http://localhost:3000/api/recipes/${this.props.id}`, {
+            method: 'PUT',
 
             body: formData,
 
@@ -132,7 +138,7 @@ export default class RecipeCreate extends React.Component {
             })
             .then(json => {
                 debugger
-                if (!json.err_field) {
+                if (!json.error) {
                     this.setState({ redirect: true })
                 }
             })
@@ -143,18 +149,9 @@ export default class RecipeCreate extends React.Component {
     }
 
     render() {
-        var value;
-        if (this.props.match.params.id) {
-            value = this.props.match.params.id;
-        }
-        else {
-            value = 'just your profile'
-        }
+
         return (
             <div>
-                <Total />
-
-                <h2>Create Recipe</h2>
                 {this.showPage()}
                 {this.Redirect()}
             </div>

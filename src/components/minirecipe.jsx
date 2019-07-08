@@ -51,7 +51,7 @@ export default class Recipeitem extends Component {
 
     }
     favoriteButton = () => {
-        debugger
+        // debugger
         let text = (this.state.favorite) ? 'remove from favorite' : 'add to favorite'
         return (
             <div class="item__text-favorite">
@@ -65,7 +65,7 @@ export default class Recipeitem extends Component {
     }
 
     render() {
-        debugger
+        // debugger
         const value = this.props.test;
         return (
             <div class="list__item">

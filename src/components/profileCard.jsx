@@ -37,6 +37,31 @@ export default class ProfileCard extends Component {
             return (<span class="logout" onClick={this.logout}>Logout</span>)
         }
     }
+    delete = () => {
+        fetch(`http://localhost:3000/api/users/${this.props.id}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error("Network response was not ok");
+            })
+            .then(json => {
+                if (!json.error) {
+                    this.logout();
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    }
+    deleteAccountBtn = () => {
+        if (this.props.deleteAccount) {
+            return (<span class="delete" onClick={this.delete}>Delete Account</span>)
+        }
+    }
     render() {
         // const [open, setOpen] = React.useState(false);
         return (
@@ -65,7 +90,9 @@ export default class ProfileCard extends Component {
                     <div class="user__logoutbtn">
                         {this.logoutBtn()}
                     </div>
-
+                    <div class="user__deleteAccountBtn">
+                        {this.deleteAccountBtn()}
+                    </div>
                 </div>
                 <div class="redirect">
                     {this.redirect()}

@@ -20,7 +20,7 @@ export default class StepsShow extends Component {
     }
 
     redirect = () => {
-        debugger
+        // debugger
         if (!this.state.Auth) {
             return (<Redirect to={{
                 pathname: "/",
@@ -29,7 +29,7 @@ export default class StepsShow extends Component {
         }
     }
     logout = () => {
-        debugger
+        // debugger
         cookie.remove('token', { path: '/' })
         this.setState({ Auth: false });
     }
@@ -41,7 +41,7 @@ export default class StepsShow extends Component {
 
 
     steps = () => {
-        debugger
+        // debugger
         if (this.props.steps.length)
             return (
                 <div>

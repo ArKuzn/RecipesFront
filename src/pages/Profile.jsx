@@ -31,7 +31,7 @@ export default class Profile extends React.Component {
             let params = { token: cookie.load('token') }
             url = new URL('http://localhost:3000/api/users/profile')
             url.search = new URLSearchParams(params)
-            this.setState({ logout: true });
+            this.setState({ logout: true, deleteAccount: true });
             debugger
 
         }
@@ -60,6 +60,7 @@ export default class Profile extends React.Component {
                 return (<div><ProfileCard
                     {...this.state.profile}
                     logout={this.state.logout}
+                    deleteAccount={this.state.deleteAccount}
                 ></ProfileCard>
                 </div>)
             }

@@ -34,11 +34,29 @@ export default class StepsInputs extends Component {
             last_step: 'step 0',
         }
     }
+    componentDidMount = () => {
+        if (this.props.steps) {
+            let newsteps = [];
+            for (let stepId in this.props.steps) {
+                let step = {};
+                step.key = ++counterId;
+                step.id = counterId;
+                step.value = this.props.steps[stepId];
+                newsteps.push(step);
+            }
+            const emptyStep = {};
+            emptyStep.key = ++counterId;
+            emptyStep.id = counterId;
+            emptyStep.value = '';
+            newsteps.push(emptyStep);
+            this.setState({ steps: newsteps })
+        }
+    }
     addStep = (item) => {
         // debugger
         const emptyStep = {};
         emptyStep.key = ++counterId;
-        emptyStep.id = +this.state.steps[this.state.steps.length - 1].id + 1;
+        emptyStep.id = counterId;
         emptyStep.value = '';
         this.setState(prevState => ({
             ...prevState,
@@ -191,7 +209,7 @@ export default class StepsInputs extends Component {
                                 multiline
                                 rows="2"
                                 variant="outlined"
-                                autoFocus
+                                // autoFocus={this.state.autofocus}
                                 // fullWidth
                                 style={{ width: 500 }}
                             />
