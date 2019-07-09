@@ -41,7 +41,7 @@ export default class StepsInputs extends Component {
                 let step = {};
                 step.key = ++counterId;
                 step.id = counterId;
-                step.value = this.props.steps[stepId];
+                step.value = this.props.steps[stepId].text;
                 newsteps.push(step);
             }
             const emptyStep = {};

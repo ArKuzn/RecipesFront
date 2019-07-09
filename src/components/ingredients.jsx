@@ -41,7 +41,7 @@ export default class IngredientsInputs extends Component {
                 let ingredient = {};
                 ingredient.key = ++counterId;
                 ingredient.id = `ingredient ${counterId}`;
-                ingredient.value = this.props.ingredients[ingredientId];
+                ingredient.value = this.props.ingredients[ingredientId].title;
                 newingredients.push(ingredient);
             }
             const emptyIngredient = {};

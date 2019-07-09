@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import FavoriteButton from "../components/favorite-button"
+import IngredientsShow from './show-ingredients';
 
 export default class Recipeitem extends Component {
 
@@ -90,7 +91,7 @@ export default class Recipeitem extends Component {
                     <FavoriteButton token={this.props.token} favorite={this.props.favorite} id={this.props.id}></FavoriteButton>
                     <div class="item__text-ingredients">
                         <span class="item__text-ingredients-span">
-                            Ингредиенты: {this.props.ingredients}
+                            Ингредиенты: <IngredientsShow ingredients={this.props.ingredients}></IngredientsShow>
                         </span>
                     </div>
                     <div class="item__text-difficulty">
@@ -117,7 +118,7 @@ export default class Recipeitem extends Component {
                         </a>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }

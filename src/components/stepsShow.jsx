@@ -48,7 +48,7 @@ export default class StepsShow extends Component {
                     {this.props.steps.map((step, index) => {
                         return (
                             <div class="step">
-                                <div class="step__count">{index}</div>
+                                <div class="step__count">Step {index + 1}</div>
                                 <div class="step__content">
                                     <div class="step__content-text">{step.text}</div>
                                     <div class="step__content-image"><img class="step__content-image-img" src={`http://localhost:3000/api/${step.image}`}></img></div>

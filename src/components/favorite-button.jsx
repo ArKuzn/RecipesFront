@@ -68,7 +68,7 @@ export default class FavoriteButton extends Component {
         // debugger
         // this.setState({ favorite: this.props.favorite });
         let text = (this.state.favorite) ? 'remove from favorite' : 'add to favorite'
-        debugger
+
         if (this.props.token)
             return (
                 <div class="item__text-favorite">

@@ -19,7 +19,7 @@ export default class ProfileCard extends Component {
 
     }
     redirect = () => {
-        debugger
+
         if (!this.state.Auth) {
             return (<Redirect to={{
                 pathname: "/",
@@ -28,7 +28,7 @@ export default class ProfileCard extends Component {
         }
     }
     logout = () => {
-        debugger
+
         cookie.remove('token', { path: '/' })
         this.setState({ Auth: false });
     }
@@ -38,16 +38,23 @@ export default class ProfileCard extends Component {
         }
     }
     delete = () => {
-        fetch(`http://localhost:3000/api/users/${this.props.id}`, {
+        debugger
+        let url;
+        let params = { token: cookie.load('token') }
+        url = new URL(`http://localhost:3000/api/users/${this.props.id}`)
+        url.search = new URLSearchParams(params)
+        fetch(url, {
             method: "DELETE"
         })
             .then(response => {
+                debugger
                 if (response.ok) {
                     return response.json();
                 }
                 throw new Error("Network response was not ok");
             })
             .then(json => {
+                debugger
                 if (!json.error) {
                     this.logout();
                 }

@@ -19,7 +19,7 @@ export default class DeleteRecipe extends React.Component {
         }
     }
     componentDidMount() {
-        debugger
+
         if (!cookie.load('token')) {
             this.setState({ Author: false })
             // this.setState({ redirect: true });
@@ -30,7 +30,7 @@ export default class DeleteRecipe extends React.Component {
             url.search = new URLSearchParams(params)
             fetch(url, { method: "GET" })
                 .then(response => {
-                    debugger
+
                     if (response.ok) {
                         return response.json();
                     }
@@ -38,7 +38,7 @@ export default class DeleteRecipe extends React.Component {
                     throw new Error("Network response was not ok");
                 })
                 .then(json => {
-                    debugger
+
                     // this.setState({ userId: json.id });
                     if (this.props.author == json.id) {
                         this.setState({ Author: true })
@@ -51,16 +51,19 @@ export default class DeleteRecipe extends React.Component {
         }
     }
     delete = () => {
+        debugger
         fetch(`http://localhost:3000/api/recipes/${this.props.id}`, {
             method: "DELETE"
         })
             .then(response => {
+                debugger
                 if (response.ok) {
                     return response.json();
                 }
                 throw new Error("Network response was not ok");
             })
             .then(json => {
+                debugger
                 if (!json.error) {
                     this.props.onDeleted(true);
                 }
@@ -70,7 +73,7 @@ export default class DeleteRecipe extends React.Component {
             });
     }
     showButton = () => {
-        debugger
+
         if (this.state.Author) {
             return (
                 <button onClick={this.delete}>Delete recipe</button>

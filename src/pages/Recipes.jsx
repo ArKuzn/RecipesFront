@@ -52,6 +52,18 @@ export default class Recipes extends Component {
                     throw new Error("Network response was not ok");
                 })
                 .then(json => {
+                    debugger
+                    // json.stepItem
+                    json.stepItem.sort(function (a, b) {
+                        if (a.index > b.index) {
+                            return 1;
+                        }
+                        if (a.index < b.index) {
+                            return -1;
+                        }
+                        // a должно быть равным b
+                        return 0;
+                    });
                     this.setState({ recipe: json });
                 })
                 .catch(error => {
@@ -68,17 +80,7 @@ export default class Recipes extends Component {
                     throw new Error("Network response was not ok");
                 })
                 .then(json => {
-                    //   for(let i = 0;i<json.length;i++){
-                    //   this.recipes.push({
-                    //     title: json[i].title,
-                    //     image: json[i].images,
-                    //     difficult: json[i].difficult,
-                    //     calories: json[i].calories,
-                    //     time: json[i].time,
-                    //     id:json[i]._id
-                    //   });
-                    //   }
-                    //   this.recipes.length=8;
+                    debugger
                     this.setState({ recipes: json });
                 })
                 .catch(error => {
@@ -100,14 +102,14 @@ export default class Recipes extends Component {
                         favorite = true;
                     }
                 }
-
+                debugger
                 Recipes.push(
 
                     <Recipeitem
                         title={this.state.recipes[i].title}
                         images={this.state.recipes[i].images}
-                        ingredients={this.state.recipes[i].ingredients}
-                        steps={this.state.recipes[i].steps}
+                        ingredients={this.state.recipes[i].ingredientsTable}
+                        steps={this.state.recipes[i].stepItem}
                         id={this.state.recipes[i].id}
                         author={this.state.recipes[i].author}
                         duration={this.state.recipes[i].duration}
@@ -132,12 +134,12 @@ export default class Recipes extends Component {
                     break
                 }
             }
-            // debugger
+            debugger
             result = <Recipe
                 title={this.state.recipe.title}
                 images={this.state.recipe.images}
-                ingredients={this.state.recipe.ingredients}
-                steps={this.state.recipe.steps}
+                ingredients={this.state.recipe.ingredientsTable}
+                steps={this.state.recipe.stepItem}
                 id={this.state.recipe.id}
                 author={this.state.recipe.author}
                 duration={this.state.recipe.duration}

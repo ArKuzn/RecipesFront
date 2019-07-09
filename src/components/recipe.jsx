@@ -5,6 +5,7 @@ import StepsShow from "../components/stepsShow"
 import RecipeEdit from "../components/recipe-edit"
 import EditButton from './edit-button';
 import DeleteRecipe from './delete-recipe';
+import IngredientsShow from './show-ingredients';
 
 export default class Recipe extends Component {
     constructor(props) {
@@ -16,22 +17,7 @@ export default class Recipe extends Component {
         }
     }
     componentDidMount() {
-        debugger
-        fetch(`http://localhost:3000/api/recipes/steps/${this.props.id}`, { method: "GET" })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
 
-                throw new Error("Network response was not ok");
-            })
-            .then(json => {
-                this.setState({ steps: json.steps });
-                // debugger
-            })
-            .catch(error => {
-                console.log(error);
-            });
     }
     showImages = () => {
         // let test = JSON.parse(this.props.images);
@@ -57,6 +43,7 @@ export default class Recipe extends Component {
             )
         }
     }
+
     showPage = () => {
         if (this.state.edit == true) {
             // debugger
@@ -89,9 +76,7 @@ export default class Recipe extends Component {
                         <EditButton id={this.props.id} author={this.props.author} onEdit={() => { this.setState({ edit: true }) }}></EditButton>
                         <FavoriteButton token={this.props.token} favorite={this.props.favorite} id={this.props.id}></FavoriteButton>
                         <div class="item__text-ingredients">
-                            <span class="item__text-ingredients-span">
-                                Ингредиенты: {this.props.ingredients}
-                            </span>
+                            Ingredients: <IngredientsShow ingredients={this.props.ingredients}></IngredientsShow>
                         </div>
                         <div class="item__text-difficulty">
                             <span class="item__text-difficulty-span">Сложность: {this.props.difficult}</span>
@@ -104,15 +89,12 @@ export default class Recipe extends Component {
                         <div class="item__text-calories">
                             <span class="item__text-description-span">Калории: {this.props.calories}</span>
                         </div>
-                        <div class="item__text-description">
-                            <span class="item__text-description-span">Описание: {this.props.steps}</span>
-                        </div>
                         <div class="item__text-author">
                             <span class="item__text-author-link">Автор:<Link class="item__text-name-p-a" to={"profile/" + this.props.author}>
                                 {this.props.author}
                             </Link></span>
                         </div>
-                        <StepsShow steps={this.state.steps}></StepsShow>
+                        <StepsShow steps={this.props.steps}></StepsShow>
                     </div>
                     <div class="item__buttons">
                         <div class="item__buttons-button">
