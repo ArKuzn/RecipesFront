@@ -14,8 +14,6 @@ export default class DeleteRecipe extends React.Component {
         this.state = {
             Author: false,
             token: true,
-            edit: false,
-            // setOpen: false
         }
     }
     componentDidMount() {

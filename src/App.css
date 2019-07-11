@@ -40,3 +40,9 @@ color: rgba(0, 0, 0, 0.54);
     line-height: 1;
     letter-spacing: 0.00938em;
 }
+.active {
+  background-color: gold;
+  color:Black ;
+  font-weight:bold;
+  cursor: pointer;
+}

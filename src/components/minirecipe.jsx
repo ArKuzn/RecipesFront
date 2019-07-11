@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import FavoriteButton from "../components/favorite-button"
 import IngredientsShow from './show-ingredients';
-
+import { Box, Zoom, Slide } from '@material-ui/core';
 export default class Recipeitem extends Component {
 
     constructor(props) {
@@ -55,8 +55,8 @@ export default class Recipeitem extends Component {
         // debugger
         let text = (this.state.favorite) ? 'remove from favorite' : 'add to favorite'
         return (
-            <div class="item__text-favorite">
-                <p class="item__text-name-p">
+            <div class="item__content-favorite">
+                <p class="item__content-name-p">
                     <button onClick={this.ClickHandler}>{text}</button>
 
 
@@ -67,58 +67,61 @@ export default class Recipeitem extends Component {
 
     render() {
         // debugger
-        const value = this.props.test;
+        debugger
         return (
-            <div class="list__item">
-                <div class="item__image">
-                    <img class="item__image-img" src={'http://localhost:3000/api/' + this.props.images[0]} />
-                </div>
-                <div class="item__text">
-                    <div class="item__text-recipeId">
-                        <p class="item__text-name-p">
-
-                            Recipe {this.props.id}
-
-                        </p>
+            <Slide in="true" direction="up" mountOnEnter unmountOnExit>
+                <Box display="flex" flexDirection="row" className="list__name" >
+                    <div class="item__image">
+                        <img class="item__image-img" src={'http://localhost:3000/api/' + this.props.images[0]} />
                     </div>
-                    <div class="item__text-name">
-                        <p class="item__text-name-p">
-                            <Link class="item__text-name-p-a" to={"recipes/" + this.props.id}>
-                                {this.props.title}
-                            </Link>
-                        </p>
-                    </div>
-                    <FavoriteButton token={this.props.token} favorite={this.props.favorite} id={this.props.id}></FavoriteButton>
-                    <div class="item__text-ingredients">
-                        <span class="item__text-ingredients-span">
-                            Ингредиенты: <IngredientsShow ingredients={this.props.ingredients}></IngredientsShow>
+                    <div class="item__content">
+                        <div class="item__content-recipeId">
+                            <p class="item__content-name-p">
+
+                                Recipe {this.props.id}
+
+                            </p>
+                        </div>
+                        <div class="item__content-name">
+                            <p class="item__content-name-p">
+                                <Link class="item__content-name-p-a" to={"recipes/" + this.props.id}>
+                                    {this.props.title}
+                                </Link>
+                            </p>
+                        </div>
+                        <FavoriteButton token={this.props.token} favorite={this.props.favorite} id={this.props.id}></FavoriteButton>
+                        <Box display="flex" flexDirection="row" className="item__content-ingredients">
+                            <span class="item__content-ingredients-span">
+                                Ингредиенты: &nbsp;
                         </span>
-                    </div>
-                    <div class="item__text-difficulty">
-                        <span class="item__text-difficulty-span">Сложность:</span>
-                        <div class="aside__rating" class="'rait_'+difficult"></div>
-                    </div>
-                    <div class="item__text-duration">
-                        <span class="item__text-duration-span">Длительность готовки: {this.props.duration}ч.</span>
-                    </div>
+                            <IngredientsShow ingredients={this.props.ingredients}></IngredientsShow>
+                        </Box>
+                        <div class="item__content-difficulty">
+                            <span class="item__content-difficulty-span">Сложность:&nbsp;{this.props.difficult}</span>
+                            <div class="aside__rating" class="'rait_'+difficult"></div>
+                        </div>
+                        <div class="item__content-duration">
+                            <span class="item__content-duration-span">Длительность готовки:&nbsp;{this.props.duration}ч.</span>
+                        </div>
 
-                    <div class="item__text-description">
-                        <span class="item__text-description-span">Описание: {this.props.steps}</span>
+                        <div class="item__content-description">
+                            <span class="item__content-description-span">Описание:&nbsp;{this.props.steps[0].text}</span>
+                        </div>
+                        <div class="item__content-author">
+                            <span class="item__content-author-link">Автор:&nbsp;<Link class="item__content-name-p-a" to={"profile/" + this.props.author}>
+                                {this.props.author}
+                            </Link></span>
+                        </div>
                     </div>
-                    <div class="item__text-author">
-                        <span class="item__text-author-link">Автор:<Link class="item__text-name-p-a" to={"profile/" + this.props.author}>
-                            {this.props.author}
-                        </Link></span>
+                    <div class="item__buttons">
+                        <div class="item__buttons-button">
+                            <a href>
+                                <div class="item__buttons-button-img disactive"></div>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="item__buttons">
-                    <div class="item__buttons-button">
-                        <a href>
-                            <div class="item__buttons-button-img disactive"></div>
-                        </a>
-                    </div>
-                </div>
-            </div >
+                </Box>
+            </Slide>
         )
     }
 }

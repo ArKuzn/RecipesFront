@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import cookie from 'react-cookies'
+import { Avatar } from '@material-ui/core';
 
 export default class ProfileCard extends Component {
     constructor(props) {
@@ -80,24 +81,24 @@ export default class ProfileCard extends Component {
                     <div class="user__avatar">
                         <img class="user__avatar-img" src={"http://localhost:3000/api/" + this.props.avatar}></img>
                     </div>
-                    <div class="user__login">
+                    <div class="user__field user__login">
                         <span class="user__login-span">Login: {this.props.login}</span>
                     </div>
-                    <div class="user__name">
-                        <span class="user__name-span">Name: {this.props.name}</span>
+                    <div class="user__field user__name">
+                        <span class="user__name-span">Name: {this.props.name || 'None'}</span>
                     </div>
-                    <div class="user__about">
-                        <span class="user__about-span">About: {this.props.about}</span>
+                    <div class="user__field user__about">
+                        <span class="user__about-span">About: {this.props.about || 'None'}</span>
                     </div>
-                    <div class="user__favorites">
+                    <div class="user__field user__favorites">
                         <span class="user__favorites-span">
                             Favorites: {this.props.favorites}
                         </span>
                     </div>
-                    <div class="user__logoutbtn">
+                    <div class="user__field user__logoutbtn">
                         {this.logoutBtn()}
                     </div>
-                    <div class="user__deleteAccountBtn">
+                    <div class="user__field user__deleteAccountBtn">
                         {this.deleteAccountBtn()}
                     </div>
                 </div>

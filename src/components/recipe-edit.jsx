@@ -54,7 +54,7 @@ export default class RecipeEdit extends React.Component {
         if (this.state.redirect) {
             return (
                 <Redirect to={{
-                    pathname: "/",
+                    pathname: "/recipes",
                     // state: { from: props.location }
                 }} />
             )
@@ -105,6 +105,7 @@ export default class RecipeEdit extends React.Component {
         for (let fileId in stepsimages) {
             debugger
             formData.append("stepsimages", stepsimages[fileId])
+            formData.append("ImageNumber", fileId)
         }
         formData.append("ingredients", ingredients)
         formData.append("title", event.target.elements["title"].value)

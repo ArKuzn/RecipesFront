@@ -5,6 +5,7 @@ import Recipeitem from "../components/minirecipe"
 import Recipe from "../components/recipe"
 import Filter from "../components/filter"
 import cookie from 'react-cookies'
+import { Box } from '@material-ui/core';
 export default class Recipes extends Component {
     constructor(props) {
         super(props);
@@ -91,7 +92,7 @@ export default class Recipes extends Component {
     showRecipes = () => {
         let token = cookie.load('token');
 
-        if (this.state.recipes[0]) {
+        if (this.state.recipes) {
             debugger
             let Recipes = [];
             for (let i = 0; i < this.state.recipes.length; i++) {
@@ -113,16 +114,21 @@ export default class Recipes extends Component {
                         id={this.state.recipes[i].id}
                         author={this.state.recipes[i].author}
                         duration={this.state.recipes[i].duration}
+                        difficult={this.state.recipes[i].difficult}
                         favorite={favorite}
                         token={token}
                     >
                     </Recipeitem>)
             }
             return (
-                <div>
-                    {Recipes}
+                <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around" flexWrap="wrap">
                     <Filter onApplyFilter={this.handleFilter} ></Filter >
-                </div>
+                    <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around">
+                        {Recipes}
+
+                    </Box>
+
+                </Box >
             )
         }
         if (this.state.recipe.images) {
@@ -163,11 +169,13 @@ export default class Recipes extends Component {
             value = ''
         }
         return (
-            <div>
+            <div class="body">
                 <Total />
 
                 <h2>Recipes {value}</h2>
+
                 {this.showRecipes()}
+
 
             </div>
 

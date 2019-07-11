@@ -23,9 +23,16 @@ export default class IngredientsShow extends Component {
         debugger
         let ingredients = [];
         for (let ingredient in this.props.ingredients) {
-            ingredients.push(
-                <span class="item__text-ingredients-span">{this.props.ingredients[ingredient].title}|</span>
-            );
+            if (ingredient < this.props.ingredients.length - 1) {
+                ingredients.push(
+                    <span class="item__text-ingredients-span">{this.props.ingredients[ingredient].title}, </span>
+                );
+            }
+            else {
+                ingredients.push(
+                    <span class="item__text-ingredients-span">{this.props.ingredients[ingredient].title}</span>
+                );
+            }
         }
         return ingredients;
     }

@@ -181,12 +181,11 @@ export default class Profile extends React.Component {
             value = 'just your profile'
         }
         return (
-            <div>
+            <div className="body">
                 <Total test={'hi, prop, its profile'} />
                 {this.showProfile()}
                 {this.ShowUpdateAvatar()}
                 {this.ShowUpdateUser()}
-                <h2>Profiledd</h2>
                 {this.Redirect()}
             </div>
         )

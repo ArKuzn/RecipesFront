@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import cookie from 'react-cookies'
 import ControllerLoginPopup from '../components/dialoglogincontrol'
+import { Box } from '@material-ui/core';
 export default class Total extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ export default class Total extends Component {
     ProfileController = () => {
         if (this.state.Auth) {
             return (
-                <Link to="/profile">Profile</Link>
+                <Link activeClassName="active" className="header__item-a" to="/profile">Profile</Link>
             )
         }
         return (<ControllerLoginPopup onAuth={this.CheckAuth}></ControllerLoginPopup>)
@@ -30,39 +31,24 @@ export default class Total extends Component {
     CreateController = () => {
         if (this.state.Auth) {
             return (
-                <li>
-                    <Link to="/create">Create recipe</Link>
-                </li>
+
+                <Link activeClassName="active" className="header__item-a" to="/create">Create recipe</Link>
+
             )
         }
         return (<div></div>)
     }
+
     render() {
-        const value = this.props.test;
         return (
-            <div class="wrapper">
-                <span>{value}</span>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        {/* <Link to="/profile">Login/Register</Link> */}
-                        {/* <LoginPopup></LoginPopup> */}
-                        {this.ProfileController()}
-                    </li>
-                    {this.CreateController()}
-                    <li>
-                        <Link to="/recipes">Recipes</Link>
-                    </li>
-                    <li>
-                        <Link to="/topics">Topics</Link>
-                    </li>
-                </ul>
-            </div>
+            <Box display="flex" flexDirection="row" className="header">
+
+                <Link activeClassName="active" className="header__item-a" to="/">Home</Link>
+                {this.ProfileController()}
+                {this.CreateController()}
+                <Link activeClassName="active" className="header__item-a" to="/recipes">Recipes</Link>
+
+            </Box >
         )
     }
 }

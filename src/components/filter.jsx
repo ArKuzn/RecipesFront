@@ -11,6 +11,7 @@ export default class Filter extends Component {
             errors: {},
             ingredients: {}
         }
+        this.form = React.createRef();
     }
     componentDidMount() {
         let url = new URL('http://localhost:3000/api/recipes/ingredients')
@@ -47,6 +48,7 @@ export default class Filter extends Component {
     handleSubmit(event) {
         // console.log(event.target.elements['rank'].value);
         // console.log(event.target.elements['durationTo'].value);
+        debugger
         let ingredients = '';
         for (let i = 3; i < event.target.length; i++) {
             if (event.target[i].checked) {
@@ -58,7 +60,7 @@ export default class Filter extends Component {
         let direction = event.target.elements['rank'].value.split('-')[1];
         let duration = '';
         if (event.target.elements['durationFrom'].value || event.target.elements['durationTo'].value) {
-            duration = event.target.elements['durationFrom'].value + '-' + event.target.elements['durationTo'].value;
+            duration = (event.target.elements['durationFrom'].value || '1') + '-' + (event.target.elements['durationTo'].value || '99');
         }
 
         let params = { ingredients: ingredients, order_field, direction, duration: duration }
@@ -85,10 +87,20 @@ export default class Filter extends Component {
                 console.log(error);
             });
 
-        event.preventDefault();
+        // event.preventDefault();
+        // this.form.current.preventDefault();
+        try {
+            event.preventDefault()
+        } catch{ }
     }
     handleInput = event => {
+        debugger
 
+        let form = {};
+        form.target = event.target.form;
+        this.handleSubmit(form);
+        console.log(this.form.current);
+        // this.form.current.submit();
         // let { value, name } = event.currentTarget;
         // let chk = [name];
         // event.currentTarget.type === 'checkbox' ? value += this.state.ingredients : alert('lyl');
@@ -109,7 +121,7 @@ export default class Filter extends Component {
         for (let ingredient in this.state.ingredients) {
             ingredientCheckboxs.push(
                 <label class="ingredient1">
-                    <input type="checkbox" name="ingredients" value={this.state.ingredients[ingredient].title} /> {this.state.ingredients[ingredient].title}
+                    <input type="checkbox" name="ingredients" value={this.state.ingredients[ingredient].title} onChange={this.handleInput} /> {this.state.ingredients[ingredient].title}
                 </label>
             )
 
@@ -120,15 +132,15 @@ export default class Filter extends Component {
         const value = this.props.test;
         return (
             <div class="filter">
-                <form class="filter__form" onSubmit={this.handleSubmit}>
+                <form class="filter__form" onSubmit={this.handleSubmit} ref={this.form}>
                     <label class="duration">
-                        duration from
-                        <input name="durationFrom" type="text" class="duration__from" onChange={this.handleInput} />
-                        to
-                        <input name="durationTo" type="text" class="duration__to" onChange={this.handleInput} />
+                        Duration from
+                        &nbsp;<input name="durationFrom" type="text" class="duration__from" onChange={this.handleInput} />
+                        &nbsp;to&nbsp;
+                        <input name="durationTo" type="text" class="duration__to" onChange={this.handleInput} />&nbsp;
                     </label>
                     <label class="rank">
-                        rank
+                        Rank&nbsp;
                     <select name="rank" onChange={this.handleInput}>
                             <option value="title-ASC">name up</option>
                             <option value="title-DESC">name down</option>
@@ -137,7 +149,7 @@ export default class Filter extends Component {
                         </select>
                     </label>
                     <div class="ingredients">
-                        {this.ingredientsInput()}
+                        <span class="ingredients-span"> Choose ingredients: </span> {this.ingredientsInput()}
                         {/* <label class="ingredient1">
                             <input type="checkbox" name="ingredients" value="Car" onChange={this.handleInput} /> I have a car
                     </label>

@@ -35,6 +35,7 @@ export default class StepsInputs extends Component {
         }
     }
     componentDidMount = () => {
+        debugger
         if (this.props.steps) {
             let newsteps = [];
             for (let stepId in this.props.steps) {
@@ -42,7 +43,9 @@ export default class StepsInputs extends Component {
                 step.key = ++counterId;
                 step.id = counterId;
                 step.value = this.props.steps[stepId].text;
+                step.image = this.props.steps[stepId].image;
                 newsteps.push(step);
+
             }
             const emptyStep = {};
             emptyStep.key = ++counterId;
@@ -76,37 +79,10 @@ export default class StepsInputs extends Component {
                 break;
             }
         }
-
-
-        // for (let stepId in this.state.steps) {
-        //     if (this.state.steps[stepId].id == item.id) {
-        //         this.state.steps.splice(stepId, 1);
-        //         let newSteps = [];
-        //         for (let id in this.state.steps) {
-        //             let newStep = {};
-        //             newStep.id = `step ${+id}`
-        //             newStep.value = this.state.steps[id].value
-        //             newSteps.push(newStep);
-        //             // this.setState({ingredients[id]})
-        //         }
-        // let tmp = newIngredients[ingredientId];
-        // newIngredients[ingredientId] = newIngredients[newIngredients.length - 1];
-        // newIngredients[newIngredients.length - 1] = tmp;
-
-        //         this.setState({ steps: newSteps })
-        //         // debugger
-        //     }
-        // }
     }
     BlurController = (event) => {
         debugger
         if (event.currentTarget.value.length > 0) {
-            // if(event.currentTarget.id==)
-            // if (this.state.last_step) {
-
-            //     return this.addStep(event.currentTarget)
-
-            // }
             if (event.currentTarget.id.split(' ')[1] == this.state.steps[this.state.steps.length - 1].id) {
 
                 return this.addStep(event.currentTarget)
@@ -114,9 +90,6 @@ export default class StepsInputs extends Component {
             }
         }
         else {
-            // if (!this.state.last_step) {
-            //     return this.deleteStep(event.currentTarget)
-            // }
             if (event.currentTarget.id.split(' ')[1] != this.state.steps[this.state.steps.length - 1].id) {
                 return this.deleteStep(event.currentTarget)
             }
@@ -151,46 +124,6 @@ export default class StepsInputs extends Component {
         // debugger
     }
     steps = () => {
-        // let steps_fields = [];
-        // // debugger
-        // for (let stepId in this.state.steps) {
-        //     // debugger
-        //     steps_fields.push(
-        //         <div>
-        //             <TextField
-        //                 // value={steps.value}
-        //                 margin="dense"
-        //                 id={`step ${+stepId}`}
-        //                 label={`Step ${+stepId + 1}`}
-        //                 type="text"
-        //                 onBlur={this.BlurController}
-        //                 onFocus={this.FocusController}
-        //                 multiline
-        //                 rows="2"
-        //                 variant="outlined"
-        //                 // fullWidth
-        //                 style={{ width: 500 }}
-        //             />
-        //             {this.showImages(stepId)}
-        //             <input
-        //                 id={`stepimage ${+stepId}`}
-        //                 type="file"
-        //                 style={{ display: 'none' }}
-        //                 onChange={this.handleUploadImageStep} />
-        //             <label htmlFor={`stepimage ${+stepId}`}>
-        //                 <Button variant="raised" component="span"  >
-        //                     Upload image for Step
-        //                 </Button>
-        //             </label>
-        //         </div>
-        //     )
-        // }
-        // // debugger
-        // return (
-        //     <div>
-        //         {steps_fields}
-        //     </div>
-        // );
         console.log(this.state.steps);
         return (
             <div>

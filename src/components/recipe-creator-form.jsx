@@ -25,12 +25,15 @@ export default class CreateRecipeForm extends Component {
             // setOpen: false
             files: [],
             stepsimages: [],
-            recipe: {}
+            recipe: {},
+            submitText: 'Create'
         }
     }
     componentDidMount() {
-        if (this.props.id) {
-
+        debugger
+        // alert('lol')
+        if (this.props.title) {
+            this.setState({ submitText: 'Edit' })
         }
     }
     handleSubmit = (event) => {
@@ -68,6 +71,7 @@ export default class CreateRecipeForm extends Component {
                     label="Title"
                     type="text"
                     defaultValue={this.props.title}
+                    required
                 />
                 <TextField
                     margin="dense"
@@ -102,7 +106,7 @@ export default class CreateRecipeForm extends Component {
                 </Button>
 
                 <Button type="submit" color="primary">
-                    Create
+                    {this.state.submitText}
                 </Button>
             </form>
         )
