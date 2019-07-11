@@ -30,7 +30,7 @@ export default class CreateRecipeForm extends Component {
         }
     }
     componentDidMount() {
-        debugger
+        // debugger
         // alert('lol')
         if (this.props.title) {
             this.setState({ submitText: 'Edit' })
@@ -48,7 +48,7 @@ export default class CreateRecipeForm extends Component {
         });
     }
     handleUploadStepImage = (file) => {
-        debugger
+        // debugger
         // this.state.stepImages.push({
         //     name: file.name,
         //     id: id
@@ -58,7 +58,7 @@ export default class CreateRecipeForm extends Component {
     }
     render() {
         // const [open, setOpen] = React.useState(false);
-        debugger
+        // debugger
         console.log(this.state.recipe)
         return (
             <form class="Recipe_creator__form" onSubmit={this.handleSubmit}>

@@ -69,11 +69,11 @@ export default class IngredientsInputs extends Component {
             ...prevState,
             ingredients: [...prevState.ingredients, oldObject]
         }));
-        debugger
+        // debugger
 
     }
     deleteIngredient = (item) => {
-        debugger
+        // debugger
         let ingredientsList = [...this.state.ingredients]
         for (let ingredientId in ingredientsList) {
             if (ingredientsList[ingredientId].id == item.id) {
@@ -86,7 +86,7 @@ export default class IngredientsInputs extends Component {
     }
     BlurController = (event) => {
         // debugger
-        debugger
+        // debugger
         if (event.currentTarget.value.length > 0) {
             if (event.currentTarget.id == this.state.ingredients[this.state.ingredients.length - 1].id) {
 

@@ -35,7 +35,7 @@ export default class StepsInputs extends Component {
         }
     }
     componentDidMount = () => {
-        debugger
+        // debugger
         if (this.props.steps) {
             let newsteps = [];
             for (let stepId in this.props.steps) {
@@ -81,7 +81,7 @@ export default class StepsInputs extends Component {
         }
     }
     BlurController = (event) => {
-        debugger
+        // debugger
         if (event.currentTarget.value.length > 0) {
             if (event.currentTarget.id.split(' ')[1] == this.state.steps[this.state.steps.length - 1].id) {
 
@@ -111,7 +111,7 @@ export default class StepsInputs extends Component {
     showImages = (id) => {
         // debugger
         return (
-            <div>
+            <div class="create__uploadedImage">
                 {this.state.steps[id].image}
             </div>
         )
@@ -129,34 +129,39 @@ export default class StepsInputs extends Component {
             <div>
                 {this.state.steps.map((step, index) => {
                     return (
-                        <div>
-                            <TextField
-                                value={step.value}
-                                margin="dense"
-                                id={`step ${+step.id}`}
-                                label={`Step ${+index + 1}`}
-                                type="text"
-                                onBlur={this.BlurController}
-                                onFocus={this.FocusController}
-                                onChange={(e) => this.onChangeInput(e, step)}
-                                multiline
-                                rows="2"
-                                variant="outlined"
-                                // autoFocus={this.state.autofocus}
-                                // fullWidth
-                                style={{ width: 500 }}
-                            />
-                            {this.showImages(index)}
-                            <input
-                                id={`stepimage ${+index}`}
-                                type="file"
-                                style={{ display: 'none' }}
-                                onChange={this.handleUploadImageStep} />
-                            <label htmlFor={`stepimage ${+index}`}>
-                                <Button variant="raised" component="span"  >
-                                    Upload image for Step
+                        <div class="create__step">
+                            <div class="create__input">
+                                <TextField
+                                    value={step.value}
+                                    margin="dense"
+                                    id={`step ${+step.id}`}
+                                    label={`Step ${+index + 1}`}
+                                    type="text"
+                                    onBlur={this.BlurController}
+                                    onFocus={this.FocusController}
+                                    onChange={(e) => this.onChangeInput(e, step)}
+                                    multiline
+                                    rows="2"
+                                    variant="outlined"
+                                    // autoFocus={this.state.autofocus}
+                                    // fullWidth
+                                    style={{ width: 500 }}
+                                />
+                            </div>
+                            <div class="create__image">
+
+                                <input
+                                    id={`stepimage ${+index}`}
+                                    type="file"
+                                    style={{ display: 'none' }}
+                                    onChange={this.handleUploadImageStep} />
+                                <label htmlFor={`stepimage ${+index}`}>
+                                    <Button variant="raised" component="span"  >
+                                        Upload image for Step
                                     </Button>
-                            </label>
+                                </label>
+                                {this.showImages(index)}
+                            </div>
                         </div>
                     )
                 })}

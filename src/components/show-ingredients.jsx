@@ -20,7 +20,7 @@ export default class IngredientsShow extends Component {
 
 
     showIngredients = () => {
-        debugger
+        // debugger
         let ingredients = [];
         for (let ingredient in this.props.ingredients) {
             if (ingredient < this.props.ingredients.length - 1) {

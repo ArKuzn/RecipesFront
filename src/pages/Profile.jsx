@@ -21,20 +21,14 @@ export default class Profile extends React.Component {
     }
     componentDidMount() {
         let url;
-        if (this.props.match.params.id) {
-            url = new URL(`http://localhost:3000/api/users/${this.props.match.params.id}`)
+        if (!cookie.load('token')) {
+            this.setState({ token: false });
         }
-        else {
-            if (!cookie.load('token')) {
-                this.setState({ token: false });
-            }
-            let params = { token: cookie.load('token') }
-            url = new URL('http://localhost:3000/api/users/profile')
-            url.search = new URLSearchParams(params)
-            this.setState({ logout: true, deleteAccount: true });
-            debugger
-
-        }
+        let params = { token: cookie.load('token') }
+        url = new URL('http://localhost:3000/api/users/profile')
+        url.search = new URLSearchParams(params)
+        this.setState({ logout: true, deleteAccount: true });
+        debugger
         fetch(url, { method: "GET" })
             .then(response => {
                 debugger
@@ -173,19 +167,16 @@ export default class Profile extends React.Component {
         }
     }
     render() {
-        var value;
-        if (this.props.match.params.id) {
-            value = this.props.match.params.id;
-        }
-        else {
-            value = 'just your profile'
-        }
         return (
             <div className="body">
-                <Total test={'hi, prop, its profile'} />
-                {this.showProfile()}
-                {this.ShowUpdateAvatar()}
-                {this.ShowUpdateUser()}
+                <Total />
+                <div class="user__profile">
+                    {this.showProfile()}
+                    <div class="update__buttons">
+                        {this.ShowUpdateAvatar()}
+                        {this.ShowUpdateUser()}
+                    </div>
+                </div>
                 {this.Redirect()}
             </div>
         )

@@ -38,8 +38,20 @@ export default class ProfileCard extends Component {
             return (<span class="logout" onClick={this.logout}>Logout</span>)
         }
     }
+    showFavorites = () => {
+        // debugger
+        let favorites = [];
+        for (let index in this.props.favorites) {
+            // debugger
+            favorites.push(
+                <a class="user__favorites-link" href={`/recipes/${this.props.favorites[index]}`}>Recipe {this.props.favorites[index]}</a>
+            )
+        }
+        // debugger
+        return favorites
+    }
     delete = () => {
-        debugger
+        // debugger
         let url;
         let params = { token: cookie.load('token') }
         url = new URL(`http://localhost:3000/api/users/${this.props.id}`)
@@ -48,14 +60,14 @@ export default class ProfileCard extends Component {
             method: "DELETE"
         })
             .then(response => {
-                debugger
+                // debugger
                 if (response.ok) {
                     return response.json();
                 }
                 throw new Error("Network response was not ok");
             })
             .then(json => {
-                debugger
+                // debugger
                 if (!json.error) {
                     this.logout();
                 }
@@ -92,7 +104,7 @@ export default class ProfileCard extends Component {
                     </div>
                     <div class="user__field user__favorites">
                         <span class="user__favorites-span">
-                            Favorites: {this.props.favorites}
+                            Favorites: {this.showFavorites()}{/* Favorites: {this.props.favorites} */}
                         </span>
                     </div>
                     <div class="user__field user__logoutbtn">

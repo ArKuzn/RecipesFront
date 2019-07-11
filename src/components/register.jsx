@@ -20,7 +20,7 @@ export default class RegisterPopup extends Component {
             Redirect: false,
             show: true
         }
-        debugger
+        // debugger
         if (props.open) {
             this.setState({ open: props.open })
         }
@@ -33,7 +33,7 @@ export default class RegisterPopup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.setState({ wrongLogin: false, wrongPass: false, error: '' });
-        debugger
+        // debugger
         let params = { ...event.target };
         params[0] = event.target[0].files[0];
         let formData = new FormData()
@@ -53,7 +53,7 @@ export default class RegisterPopup extends Component {
 
         })
             .then(response => {
-                debugger
+                // debugger
                 if (response.status == 401) {
                     return response.json();
                 }

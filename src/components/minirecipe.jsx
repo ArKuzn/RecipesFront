@@ -105,7 +105,7 @@ export default class Recipeitem extends Component {
                         </div>
 
                         <div class="item__content-description">
-                            <span class="item__content-description-span">Описание:&nbsp;{this.props.steps[0].text}</span>
+                            <span class="item__content-description-span">Описание:&nbsp;{this.props.steps[0] ? this.props.steps[0].text : 'None'}</span>
                         </div>
                         <div class="item__content-author">
                             <span class="item__content-author-link">Автор:&nbsp;<Link class="item__content-name-p-a" to={"profile/" + this.props.author}>

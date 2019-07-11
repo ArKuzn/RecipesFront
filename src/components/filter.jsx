@@ -48,7 +48,7 @@ export default class Filter extends Component {
     handleSubmit(event) {
         // console.log(event.target.elements['rank'].value);
         // console.log(event.target.elements['durationTo'].value);
-        debugger
+
         let ingredients = '';
         for (let i = 3; i < event.target.length; i++) {
             if (event.target[i].checked) {
@@ -94,7 +94,7 @@ export default class Filter extends Component {
         } catch{ }
     }
     handleInput = event => {
-        debugger
+
 
         let form = {};
         form.target = event.target.form;
@@ -135,9 +135,9 @@ export default class Filter extends Component {
                 <form class="filter__form" onSubmit={this.handleSubmit} ref={this.form}>
                     <label class="duration">
                         Duration from
-                        &nbsp;<input name="durationFrom" type="text" class="duration__from" onChange={this.handleInput} />
+                        &nbsp;<input class="duration__input" placeholder="0" name="durationFrom" type="text" class="duration__from" onChange={this.handleInput} />
                         &nbsp;to&nbsp;
-                        <input name="durationTo" type="text" class="duration__to" onChange={this.handleInput} />&nbsp;
+                        <input class="duration__input" placeholder="999" name="durationTo" type="text" class="duration__to" onChange={this.handleInput} />&nbsp;
                     </label>
                     <label class="rank">
                         Rank&nbsp;
@@ -148,8 +148,9 @@ export default class Filter extends Component {
                             <option value="difficult-DESC">difficult down</option>
                         </select>
                     </label>
+                    <input class="filter__submit" type="submit" />
                     <div class="ingredients">
-                        <span class="ingredients-span"> Choose ingredients: </span> {this.ingredientsInput()}
+                        <span class="ingredients-span"> Choose ingredients: </span> <div class="ingredients-checkboxs">{this.ingredientsInput()}</div>
                         {/* <label class="ingredient1">
                             <input type="checkbox" name="ingredients" value="Car" onChange={this.handleInput} /> I have a car
                     </label>
@@ -157,7 +158,7 @@ export default class Filter extends Component {
                             <input type="checkbox" name="ingredients" value="Car2" onChange={this.handleInput} /> I have a car2
                     </label> */}
                     </div>
-                    <input type="submit" />
+
                 </form>
             </div >
         )

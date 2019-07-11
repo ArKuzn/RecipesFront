@@ -61,7 +61,7 @@ export default class RecipeEdit extends React.Component {
         }
     }
     handleSubmit = (event, files, stepsimages) => {
-        debugger
+        // debugger
         event.preventDefault();
         // console.log(event.target.elements['title'].value);
         let ingredients = [];
@@ -96,14 +96,14 @@ export default class RecipeEdit extends React.Component {
             steps: steps,
             token: cookie.load('token')
         };
-        debugger
+        // debugger
         let formData = new FormData()
         for (let fileId in files) {
-            debugger
+            // debugger
             formData.append("images", files[fileId])
         }
         for (let fileId in stepsimages) {
-            debugger
+            // debugger
             formData.append("stepsimages", stepsimages[fileId])
             formData.append("ImageNumber", fileId)
         }
@@ -114,7 +114,7 @@ export default class RecipeEdit extends React.Component {
         formData.append("duration", event.target.elements["duration"].value)
         formData.append("steps", steps)
         formData.append("token", cookie.load('token'))
-        debugger
+        // debugger
         // for (var k in params) {
         //     formData.append(event.target[k].id, params[k].value);
 
@@ -130,7 +130,7 @@ export default class RecipeEdit extends React.Component {
 
         })
             .then(response => {
-                debugger
+                // debugger
                 if (response.ok) {
                     return response.json();
                 }
@@ -138,7 +138,7 @@ export default class RecipeEdit extends React.Component {
                 throw new Error("Network response was not ok");
             })
             .then(json => {
-                debugger
+                // debugger
                 if (!json.error) {
                     this.setState({ redirect: true })
                 }
