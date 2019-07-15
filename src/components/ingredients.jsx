@@ -110,10 +110,13 @@ export default class IngredientsInputs extends Component {
     }
     ingredients = () => {
         return (
-            <div>
+            <div class="create__ingredients">
                 {this.state.ingredients.map((ingredient, index) => {
                     return (
+
                         <TextField
+                            required={index == 0 ? true : false}
+                            className="create__ingredients-input"
                             value={ingredient.value}
                             margin="dense"
                             key={ingredient.key}

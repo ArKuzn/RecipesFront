@@ -31,6 +31,7 @@ export default class StepsInputs extends Component {
                     key: 0
                 }
             ],
+            require: true,
             last_step: 'step 0',
         }
     }
@@ -132,6 +133,7 @@ export default class StepsInputs extends Component {
                         <div class="create__step">
                             <div class="create__input">
                                 <TextField
+                                    required={index == 0 ? true : false}
                                     value={step.value}
                                     margin="dense"
                                     id={`step ${+step.id}`}

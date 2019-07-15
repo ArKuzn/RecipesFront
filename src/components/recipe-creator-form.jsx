@@ -72,6 +72,7 @@ export default class CreateRecipeForm extends Component {
                     type="text"
                     defaultValue={this.props.title}
                     required
+                    className="create__form-input"
                 />
                 <TextField
                     margin="dense"
@@ -79,6 +80,7 @@ export default class CreateRecipeForm extends Component {
                     label="Calories"
                     type="number"
                     defaultValue={this.props.calories}
+                    className="create__form-input"
                 />
                 <TextField
                     margin="dense"
@@ -86,6 +88,7 @@ export default class CreateRecipeForm extends Component {
                     label="Difficult"
                     type="number"
                     defaultValue={this.props.difficult}
+                    className="create__form-input"
                 />
                 <TextField
                     margin="dense"
@@ -93,6 +96,7 @@ export default class CreateRecipeForm extends Component {
                     label="Duration"
                     type="number"
                     defaultValue={this.props.duration}
+                    className="create__form-input"
                 />
                 <IngredientsInputs
                     ingredients={this.props.ingredients}
