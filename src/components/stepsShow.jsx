@@ -59,7 +59,7 @@ export default class StepsShow extends Component {
                 </div>
             )
         else
-            return (<div></div>)
+            return null
     }
 
 

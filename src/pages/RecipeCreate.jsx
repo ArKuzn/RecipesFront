@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
 import user from "../components/user"
 import Total from "../components/Header"
 import ProfileCard from "../components/profileCard"
@@ -42,6 +42,8 @@ export default class RecipeCreate extends React.Component {
 
     }
     Redirect = () => {
+        this.props.history.push('/');
+
         if (this.state.redirect) {
             return (
                 <Redirect to={{
@@ -161,3 +163,7 @@ export default class RecipeCreate extends React.Component {
         )
     }
 }
+
+export default withRouter(RecipeCreate)
+
+

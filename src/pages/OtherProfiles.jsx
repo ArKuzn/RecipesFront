@@ -60,7 +60,7 @@ export default class OtherProfiles extends React.Component {
             </div>)
         }
         else {
-            return this.showError()
+            return this.state;
         }
     }
     handleClick = () => {

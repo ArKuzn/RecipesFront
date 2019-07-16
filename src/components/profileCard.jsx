@@ -19,6 +19,7 @@ export default class ProfileCard extends Component {
         }
 
     }
+
     redirect = () => {
 
         if (!this.state.Auth) {
@@ -121,4 +122,9 @@ export default class ProfileCard extends Component {
             </div >
         )
     }
+}
+
+
+ProfileCard.defaultProps = {
+    name: 'none',
 }

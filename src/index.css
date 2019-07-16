@@ -133,6 +133,7 @@ img.step__content-image-img {
 .recipe__item {
   padding: 5px;
 }
+
 .logout,
 .delete {
   cursor: pointer;
