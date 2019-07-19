@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,6 +9,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import cookie from 'react-cookies';
 import PropTypes from 'prop-types';
+import { setUser } from '../store/user/actions';
+import config from '../config';
 
 export default class LoginPopup extends Component {
   constructor(props) {
@@ -34,7 +37,7 @@ export default class LoginPopup extends Component {
     formBody.push(`login=${event.target.elements['login'].value}`);
     formBody.push(`password=${event.target.elements['password'].value}`);
     formBody = formBody.join('&');
-    fetch('http://localhost:3000/api/users/login', {
+    fetch(`${config.apiUrl}/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -54,12 +57,13 @@ export default class LoginPopup extends Component {
       .then((json) => {
         if (json.field === 'password') {
           this.setState({ wrongPass: true, error: json.msg });
-
         }
         if (json.field === 'login') {
           this.setState({ wrongLogin: true, error: json.msg });
         }
         if (json.token) {
+          debugger
+          this.props.setUser(json.user);
           cookie.save('token', json.token, { path: '/' });
           this.props.onClose(true);
         }

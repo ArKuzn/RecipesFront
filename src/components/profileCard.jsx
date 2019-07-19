@@ -1,130 +1,155 @@
-import React, { Component, PropTypes } from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import cookie from 'react-cookies'
-import { Avatar } from '@material-ui/core';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import cookie from 'react-cookies';
+import PropTypes from 'prop-types';
+import config from '../config';
 
 export default class ProfileCard extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            // setOpen: false
-            Auth: true
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      // setOpen: false
+      Auth: true,
+    };
+  }
 
+  redirect = () => {
+    if (!this.state.Auth) {
+      return (
+        <Redirect to={{
+          pathname: '/',
+        }}
+        />
+      );
     }
+    return null;
+  }
 
-    redirect = () => {
+  logout = () => {
+    debugger
+    cookie.remove('token', { path: '/' });
+    this.props.deleteUser();
+    this.setState({ Auth: false });
+  }
 
-        if (!this.state.Auth) {
-            return (<Redirect to={{
-                pathname: "/",
-                // state: { from: props.location }
-            }} />)
-        }
+  logoutBtn = () => {
+    if (this.props.logout) {
+      return (
+        <span role="link" className="logout" onClick={this.logout} tabIndex="0" onKeyDown={this.logout}>Logout</span>
+      );
     }
-    logout = () => {
+    return null;
+  }
 
-        cookie.remove('token', { path: '/' })
-        this.setState({ Auth: false });
+  showFavorites = () => {
+    const favorites = [];
+    for (let index in this.props.favorites) {
+      favorites.push(
+        <a className="user__favorites-link" href={`/recipes/${this.props.favorites[index]}`}>
+          Recipe
+          {this.props.favorites[index]}
+        </a>
+      );
     }
-    logoutBtn = () => {
-        if (this.props.logout) {
-            return (<span class="logout" onClick={this.logout}>Logout</span>)
-        }
-    }
-    showFavorites = () => {
+    return favorites;
+  }
+
+  delete = () => {
+    const params = { token: cookie.load('token') };
+    const url = new URL(`${config.apiUrl}/users/${this.props.id}`);
+    url.search = new URLSearchParams(params);
+    fetch(url, {
+      method: 'DELETE',
+    })
+      .then((response) => {
         // debugger
-        let favorites = [];
-        for (let index in this.props.favorites) {
-            // debugger
-            favorites.push(
-                <a class="user__favorites-link" href={`/recipes/${this.props.favorites[index]}`}>Recipe {this.props.favorites[index]}</a>
-            )
+        if (response.ok) {
+          return response.json();
         }
+        throw new Error('Network response was not ok');
+      })
+      .then((json) => {
         // debugger
-        return favorites
-    }
-    delete = () => {
-        // debugger
-        let url;
-        let params = { token: cookie.load('token') }
-        url = new URL(`http://localhost:3000/api/users/${this.props.id}`)
-        url.search = new URLSearchParams(params)
-        fetch(url, {
-            method: "DELETE"
-        })
-            .then(response => {
-                // debugger
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error("Network response was not ok");
-            })
-            .then(json => {
-                // debugger
-                if (!json.error) {
-                    this.logout();
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-    }
-    deleteAccountBtn = () => {
-        if (this.props.deleteAccount) {
-            return (<span class="delete" onClick={this.delete}>Delete Account</span>)
+        if (!json.error) {
+          this.logout();
         }
-    }
-    render() {
-        // const [open, setOpen] = React.useState(false);
-        return (
-            <div class="wrapper">
-                <div class="user">
-                    <div class="user__id">
-                        <span class="user__id-span">User {this.props.id}</span>
-                    </div>
-                    <div class="user__avatar">
-                        <img class="user__avatar-img" src={"http://localhost:3000/api/" + this.props.avatar}></img>
-                    </div>
-                    <div class="user__field user__login">
-                        <span class="user__login-span">Login: {this.props.login}</span>
-                    </div>
-                    <div class="user__field user__name">
-                        <span class="user__name-span">Name: {this.props.name || 'None'}</span>
-                    </div>
-                    <div class="user__field user__about">
-                        <span class="user__about-span">About: {this.props.about || 'None'}</span>
-                    </div>
-                    <div class="user__field user__favorites">
-                        <span class="user__favorites-span">
-                            Favorites: {this.showFavorites()}{/* Favorites: {this.props.favorites} */}
-                        </span>
-                    </div>
-                    <div class="user__field user__logoutbtn">
-                        {this.logoutBtn()}
-                    </div>
-                    <div class="user__field user__deleteAccountBtn">
-                        {this.deleteAccountBtn()}
-                    </div>
-                </div>
-                <div class="redirect">
-                    {this.redirect()}
-                </div>
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-            </div >
-        )
+  deleteAccountBtn = () => {
+    if (this.props.deleteAccount) {
+      return (
+        <span className="delete" onClick={this.delete} role="button" onKeyDown={this.delete} tabIndex="-1">
+          Delete Account
+        </span>
+      );
     }
+    return null;
+  }
+
+  render() {
+    // const [open, setOpen] = React.useState(false);
+    return (
+      <div className="wrapper">
+        <div className="user">
+          <div className="user__id">
+            <span className="user__id-span">
+              User&nbsp;
+              {this.props.id}
+            </span>
+          </div>
+          <div className="user__avatar">
+            <img className="user__avatar-img" src={`${config.apiUrl}/${this.props.avatar}`} alt="avatar" />
+          </div>
+          <div className="user__field user__login">
+            <span className="user__login-span">
+              Login:&nbsp;
+              {this.props.login}
+            </span>
+          </div>
+          <div className="user__field user__name">
+            <span className="user__name-span">
+              Name:&nbsp;
+              {this.props.name || 'none'}
+            </span>
+          </div>
+          <div className="user__field user__about">
+            <span className="user__about-span">
+              About:&nbsp;
+              {this.props.about || 'none'}
+            </span>
+          </div>
+          <div className="user__field user__favorites">
+            <span className="user__favorites-span">
+              Favorites:&nbsp;
+              {this.showFavorites()}
+            </span>
+          </div>
+          <div className="user__field user__logoutbtn">
+            {this.logoutBtn()}
+          </div>
+          <div className="user__field user__deleteAccountBtn">
+            {this.deleteAccountBtn()}
+          </div>
+        </div>
+        <div className="redirect">
+          {this.redirect()}
+        </div>
+      </div>
+    );
+  }
 }
-
 
 ProfileCard.defaultProps = {
-    name: 'none',
-}
+  name: 'None',
+  about: 'None',
+};
+ProfileCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  about: PropTypes.string,
+  favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

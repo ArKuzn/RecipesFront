@@ -219,3 +219,6 @@ input.duration__from {
 .update__password-input {
   /* margin: 10px !important; */
 }
+.head__link {
+  display: flex;
+}

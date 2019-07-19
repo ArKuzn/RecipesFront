@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import config from '../config';
 
 export default class Filter extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class Filter extends Component {
   }
 
   componentDidMount() {
-    const url = new URL('http://localhost:3000/api/recipes/ingredients')
+    const url = new URL(`${config.apiUrl}/recipes/ingredients`);
     fetch(url, { method: 'GET' })
       .then((response) => {
         if (response.ok) {
@@ -34,7 +35,7 @@ export default class Filter extends Component {
     for (let i = 0; i < this.props.images.length; i += 1) {
       images.push(
         <div className="item__image">
-          <img className="item__image-img" src={`http://localhost:3000/${this.props.images[i]}`} alt="index recipe" />
+          <img className="item__image-img" src={`${config.server}/${this.props.images[i]}`} alt="index recipe" />
         </div>,
       );
     }
@@ -78,8 +79,8 @@ export default class Filter extends Component {
 
     const params = { ingredients, order_field: orderField, direction, duration };
 
-    const url = new URL('http://localhost:3000/api/recipes/filter')
-    url.search = new URLSearchParams(params)
+    const url = new URL(`${config.apiUrl}/recipes/filter`);
+    url.search = new URLSearchParams(params);
     fetch(url, { method: 'GET' })
       .then((response) => {
         if (response.ok) {

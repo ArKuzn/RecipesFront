@@ -16,7 +16,6 @@ export default class IngredientsInputs extends Component {
         },
       ],
     };
-    this.counter = 1;
   }
 
   componentDidMount() {
@@ -31,6 +30,7 @@ export default class IngredientsInputs extends Component {
       }
       const emptyIngredient = {};
       emptyIngredient.key = counterId + 1;
+      counterId += 1;
       emptyIngredient.id = `ingredient ${counterId}`;
       emptyIngredient.value = '';
       newingredients.push(emptyIngredient);
@@ -46,6 +46,7 @@ export default class IngredientsInputs extends Component {
     const oldObject = {};
     oldObject.value = '';
     oldObject.key = counterId + 1;
+    counterId += 1;
     oldObject.id = `ingredient ${counterId}`;
     this.setState(prevState => ({
       ...prevState,
@@ -54,7 +55,6 @@ export default class IngredientsInputs extends Component {
   }
 
   deleteIngredient = (item) => {
-    // debugger
     const ingredientsList = [...this.state.ingredients]
     for (let ingredientId in ingredientsList) {
       if (ingredientsList[ingredientId].id == item.id) {
@@ -106,7 +106,7 @@ export default class IngredientsInputs extends Component {
               // autoFocus
               onBlur={this.BlurController}
               onFocus={this.FocusController}
-              onChange={(e) => { this.onChangeInput(e, ingredient); }}
+              onChange={(e) => { this.onChangeInput(e, ingredient) }}
             />
           );
         })}

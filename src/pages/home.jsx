@@ -1,37 +1,35 @@
-import React, { Component, PropTypes } from "react";
-import Total from "../components/Header";
-import Recipeitem from "../components/minirecipe";
-
-import config from "../config";
-
+import React, { Component } from 'react';
+import Total from '../components/Header';
+import Recipeitem from '../components/minirecipe';
+import config from '../config';
+// import config from "../config";
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: [],
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/api/recipes/filter", { method: "GET" })
-      .then(response => {
+    fetch(`${config.apiUrl}/recipes/filter`, { method: 'GET' })
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
-
-        throw new Error("Network response was not ok");
+        throw new Error('Network response was not ok');
       })
-      .then(json => {
+      .then((json) => {
         this.setState({ recipes: json });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
 
   showRecipes = () => {
     const Recipes = [];
-    for (let i = 0; i < this.state.recipes.length; i++) {
+    for (let i = 0; i < this.state.recipes.length; i += 1) {
       Recipes.push(
         <Recipeitem
           title={this.state.recipes[i].title}
@@ -41,7 +39,7 @@ export default class Home extends Component {
           id={this.state.recipes[i].id}
           author={this.state.recipes[i].author}
           duration={this.state.recipes[i].author}
-        />
+        />,
       );
     }
     return Recipes;
