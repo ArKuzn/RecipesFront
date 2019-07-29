@@ -4,13 +4,6 @@ import cookie from 'react-cookies';
 import config from '../config';
 
 export default class DeleteRecipe extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Author: false,
-    };
-    this.token = true;
-  }
 
   delete = () => {
     const url = new URL(`${config.apiUrl}/recipes/${this.props.id}`);
@@ -46,16 +39,11 @@ export default class DeleteRecipe extends React.Component {
     return <div>{this.showButton()}</div>;
   }
 }
-// DeleteRecipe.state: {
-//   Author: boolean;
-// }
 DeleteRecipe.propTypes = {
-  author: PropTypes.number,
   onDeleted: PropTypes.func,
-  active: PropTypes.bool
+  active: PropTypes.bool,
 };
 DeleteRecipe.defaultProps = {
-  author: 0,
   onDeleted: null,
   active: false,
 };

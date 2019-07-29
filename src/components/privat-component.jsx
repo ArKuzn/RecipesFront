@@ -1,24 +1,18 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import cookie from 'react-cookies';
 import {
-  BrowserRouter as Router,
   Route,
-  Link,
-  Redirect,
-  withRouter
 } from 'react-router-dom';
 import { setUser } from '../store/user/actions';
 
 
 class PrivateComponent extends Component {
   PrivateRoute = ({ component: Component, HandlerUnAuth = false, ...rest }) => {
-    debugger
     return (
       <Route
         {...rest}
         // render={props => this.props.user.login ? <Component {...rest} /> : null
-        render={props => this.props.user.login ?
+        render={(props) => this.props.user.login ?
           <Component {...rest} />
           :
           HandlerUnAuth
@@ -28,14 +22,6 @@ class PrivateComponent extends Component {
       />
     );
   };
-
-  // HandlerunAuth = (...rest) => {
-  //   try {
-  //     return <HandlerAuth {...rest} />
-  //   } catch (err) {
-  //     return null
-  //   }
-  // }
 
   render() {
     return (

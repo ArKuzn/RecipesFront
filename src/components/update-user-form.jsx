@@ -15,7 +15,7 @@ export default class UpdateUserForm extends Component {
   }
 
   handleClickPasswordHide = () => {
-    this.setState({ pass: this.state.pass ? false : true });
+    this.setState({ pass: !this.state.pass });
   };
 
   handleClose = () => {

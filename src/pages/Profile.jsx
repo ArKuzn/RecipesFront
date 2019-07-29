@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import cookie from 'react-cookies';
 import { BrowserRouter as Redirect } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import Total from '../components/Header';
@@ -15,49 +14,23 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       showProfile: true,
-      profile: '',
       logout: true,
       token: true,
       deleteAccount: true,
     };
-    debugger
   }
-  // componentDidMount() {
-  //   if (!cookie.load('token')) {
-  //     this.setState({ token: false });
-  //   }
-  //   const params = { token: cookie.load('token') };
-  //   const url = new URL('${config.apiUrl}/users/profile');
-  //   url.search = new URLSearchParams(params);
-  //   this.setState({ logout: true, deleteAccount: true });
-  //   fetch(url, { method: 'GET' })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw new Error('Network response was not ok');
-  //     })
-  //     .then((json) => {
-  //       // debugger
-  //       this.setState({ showProfile: true, profile: json.msg });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
 
   showProfile = () => {
     if (this.state.showProfile) {
       if (!this.state.update) {
-        debugger
         return (
           <div>
             <ProfileCard
-              // {...this.state.profile}
               {...this.props.user}
               logout={this.state.logout}
               deleteAccount={this.state.deleteAccount}
               {...this.props}
+              self
             />
           </div>
         );
@@ -87,23 +60,6 @@ class Profile extends React.Component {
   }
 
   handleUpdateClose = () => {
-    // this.setState({ update: false });
-    // const params = { token: cookie.load('token') };
-    // const url = new URL('${config.apiUrl}/users/profile');
-    // url.search = new URLSearchParams(params);
-    // fetch(url, { method: 'GET' })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     throw new Error('Network response was not ok');
-    //   })
-    //   .then((json) => {
-    //     this.setState({ showProfile: true, profile: json.msg });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     this.setState({ update: false, showProfile: true });
   }
 
@@ -158,9 +114,6 @@ class Profile extends React.Component {
   }
 
   ShowUpdateUser = () => {
-    // if (this.props.match.params.id) {
-    //   return null;
-    // }
     return (
       <Button type="button" onClick={this.handleClick} color="primary">
         Update profile
@@ -191,7 +144,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   setUser,
-  deleteUser
+  deleteUser,
 };
 const enchancer = connect(
   mapStateToProps,

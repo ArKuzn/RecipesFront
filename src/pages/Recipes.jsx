@@ -13,7 +13,6 @@ class Recipes extends Component {
     super(props);
     this.state = {
       recipes: {},
-      favorites: [],
     };
   }
 
@@ -39,7 +38,7 @@ class Recipes extends Component {
     for (let i = 0; i < this.state.recipes.length; i += 1) {
       let favorite = false;
       for (let recipeId in this.props.user.favorites) {
-        if (this.state.recipes[i].id == this.props.user.favorites[recipeId]) {
+        if (this.state.recipes[i].id == this.props.user.favorites[recipeId].id) {
           favorite = true;
         }
       }
@@ -50,9 +49,11 @@ class Recipes extends Component {
           ingredients={this.state.recipes[i].ingredientsTable}
           steps={this.state.recipes[i].stepItem}
           id={this.state.recipes[i].id}
-          author={this.state.recipes[i].author}
+          author={this.state.recipes[i].author_user.login}
+          authorId={this.state.recipes[i].author}
           duration={this.state.recipes[i].duration}
           difficult={this.state.recipes[i].difficult}
+          favoriteCount={this.state.recipes[i].favoritesTable.length}
           favorite={favorite}
           token={token}
           {...this.props}
@@ -60,9 +61,9 @@ class Recipes extends Component {
       );
     }
     return (
-      <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around" flexWrap="wrap">
+      <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around" flexWrap="wrap" alignItems="center">
         <Filter onApplyFilter={this.handleFilter} />
-        <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around">
+        <Box className="body__list" display="flex" flexDirection="row" justifyContent="space-beetwen" flexWrap="wrap">
           {Recipes}
         </Box>
       </Box>

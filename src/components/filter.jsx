@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import config from '../config';
+import Helpers from '../api/hs';
 
 export default class Filter extends Component {
   constructor(props) {
@@ -14,20 +15,21 @@ export default class Filter extends Component {
   }
 
   componentDidMount() {
-    const url = new URL(`${config.apiUrl}/recipes/ingredients`);
-    fetch(url, { method: 'GET' })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Network response was not ok');
-      })
-      .then((json) => {
-        this.setState({ ingredients: json.recipes });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.setState(() => {
+      Helpers.httpRequest(
+        `${config.apiUrl}/recipes/ingredients`,
+        'GET',
+      )
+        .then((response) => {
+          // debugger
+          this.setState({
+            ingredients: response.recipes,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   showImages = () => {
@@ -83,6 +85,7 @@ export default class Filter extends Component {
     url.search = new URLSearchParams(params);
     fetch(url, { method: 'GET' })
       .then((response) => {
+        // debugger
         if (response.ok) {
           return response.json();
         }
@@ -90,6 +93,7 @@ export default class Filter extends Component {
         throw new Error("Network response was not ok");
       })
       .then((json) => {
+        // debugger
         this.props.onApplyFilter(json);
       })
       .catch((error) => {
@@ -139,9 +143,7 @@ export default class Filter extends Component {
   }
 }
 Filter.propTypes = {
-  images: PropTypes.array,
-  favorite: PropTypes.bool.isRequired,
-  id: PropTypes.number.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string),
   onApplyFilter: PropTypes.func.isRequired,
 };
 Filter.defaultProps = {

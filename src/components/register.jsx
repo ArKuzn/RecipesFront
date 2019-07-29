@@ -43,13 +43,13 @@ export default class RegisterPopup extends Component {
       }
       formData.append(event.target[k].id, params[k].value);
     }
-    fetch('${config.apiUrl}/users/registration', {
+    fetch(`${config.apiUrl}/users/registration`, {
       method: 'POST',
       body: formData,
     })
       .then((response) => {
         // debugger
-        if (response.status === 401) {
+        if (response.status === 400) {
           return response.json();
         }
         if (response.ok) {
@@ -116,17 +116,21 @@ export default class RegisterPopup extends Component {
                   fullWidth
                 />
               </DialogContent>
-              <DialogActions>
-                <span className="error">{this.state.error}</span>
-                <Button onClick={this.handleClose} color="primary">
-                  Cancel
-                </Button>
-                <Button onClick={this.handleChange} color="primary">
-                  Login
-                </Button>
-                <Button type="submit" color="primary">
-                  Register
-                </Button>
+              <DialogActions className="popup__buttons">
+                <div className="popup__secondary">
+                  <Button onClick={this.handleChange} color="primary">
+                    Login
+                  </Button>
+                </div>
+                <div className="popup__control">
+                  <span className="error">{this.state.error}</span>
+                  <Button onClick={this.handleClose} color="primary">
+                    Cancel
+                  </Button>
+                  <Button type="submit" color="primary">
+                    Register
+                  </Button>
+                </div>
               </DialogActions>
             </form>
           </Dialog>
@@ -139,4 +143,5 @@ RegisterPopup.propTypes = {
   open: PropTypes.bool.isRequired,
   onLogin: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };

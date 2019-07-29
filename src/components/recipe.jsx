@@ -22,29 +22,6 @@ export default class Recipe extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const params = { token: cookie.load('token') };
-  //   const url = new URL('${config.apiUrl}/users/profile');
-  //   url.search = new URLSearchParams(params);
-  //   fetch(url, { method: 'GET' })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw new Error("Network response was not ok");
-  //     })
-  //     .then((json) => {
-  //       // this.setState({ userId: json.id });
-  //       debugger
-  //       if (this.props.author == json.id) {
-  //         this.setState({ Author: true });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
   showImages = () => {
     const images = [];
     for (let i = 0; i < this.props.images.length; i += 1) {
@@ -74,20 +51,10 @@ export default class Recipe extends Component {
     if (this.state.edit === true) {
       return (
         <RecipeEdit
-          // id={this.props.id}
-          // author={this.props.author}
-          // title={this.props.title}
-          // images={this.props.images}
-          // ingredients={this.props.ingredients}
-          // steps={this.props.steps}
-          // duration={this.props.duration}
-          // difficult={this.props.difficult}
-          // calories={this.props.calories}
           {...this.props}
         />
       );
     }
-    debugger
     return (
       <div className="recipe__items">
         <div className="recipe__content">
@@ -146,6 +113,11 @@ export default class Recipe extends Component {
                 </Link>
               </span>
             </div>
+            <div className="item__content">
+              <span className="item__content">
+                Favorites count:&nbsp;{this.props.favoriteCount.length}
+              </span>
+            </div>
           </div>
         </div>
         <div className="recipe__steps">
@@ -182,9 +154,11 @@ Recipe.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string),
   author: PropTypes.string.isRequired,
   favorite: PropTypes.bool.isRequired,
+  favoriteCount: PropTypes.arrayOf(PropTypes.object),
 };
 Recipe.defaultProps = {
   images: [],
   steps: [],
   ingredients: [],
+  favoriteCount: [],
 };

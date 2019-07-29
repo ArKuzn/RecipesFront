@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import { Redirect, Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import PropTypes from 'prop-types';
 import config from '../config';
+import SubscribeButton from './subscribe-button';
+import PrivatComponent from './privat-component';
 
 export default class ProfileCard extends Component {
   constructor(props) {
@@ -26,7 +29,6 @@ export default class ProfileCard extends Component {
   }
 
   logout = () => {
-    debugger
     cookie.remove('token', { path: '/' });
     this.props.deleteUser();
     this.setState({ Auth: false });
@@ -45,13 +47,46 @@ export default class ProfileCard extends Component {
     const favorites = [];
     for (let index in this.props.favorites) {
       favorites.push(
-        <a className="user__favorites-link" href={`/recipes/${this.props.favorites[index]}`}>
-          Recipe
-          {this.props.favorites[index]}
-        </a>
+        <Link className="user__favorites-link" to={`/recipes/${this.props.favorites[index].id}`}>
+          {/* Recipe */}
+          {this.props.favorites[index].title}
+        </Link>
       );
     }
     return favorites;
+  }
+
+  showSubscribs = () => {
+    const subscribs = [];
+    for (let index in this.props.subscribs) {
+      subscribs.push(
+        <Link className="field__subscribs-link" to={`/profile/${this.props.subscribs[index].id}`}>
+          <div className="field__subscribs-div">
+            <img class="field__subscribs-avatar" src={`${config.apiUrl}/${this.props.subscribs[index].avatar}`} />
+            {this.props.subscribs[index].login}
+          </div>
+        </Link>
+      );
+    }
+    if (!this.props.self) {
+      subscribs.push(<PrivatComponent component={SubscribeButton} id={this.props.id} className="user__subscribe" />);
+    }
+    return subscribs;
+  }
+
+  showFollowers = () => {
+    const followers = [];
+    for (let index in this.props.followers) {
+      followers.push(
+        <Link className="field__followers-link" to={`/profile/${this.props.followers[index].id}`}>
+          <div className="field__followers-div">
+            <img class="field__followers-avatar" src={`${config.apiUrl}/${this.props.followers[index].avatar}`} />
+            {this.props.followers[index].login}
+          </div>
+        </Link>
+      );
+    }
+    return followers;
   }
 
   delete = () => {
@@ -91,7 +126,6 @@ export default class ProfileCard extends Component {
   }
 
   render() {
-    // const [open, setOpen] = React.useState(false);
     return (
       <div className="wrapper">
         <div className="user">
@@ -128,6 +162,18 @@ export default class ProfileCard extends Component {
               {this.showFavorites()}
             </span>
           </div>
+          <div className="user__field user__subscribs">
+            <span className="user__field-span">Subscribed to&nbsp;</span>
+            <div class="user__field-content">
+              {this.showSubscribs()}
+            </div>
+          </div>
+          <div className="user__field user__followers">
+            <span className="user__field-span">Followers&nbsp;</span>
+            <div class="user__field-content">
+              {this.showFollowers()}
+            </div>
+          </div>
           <div className="user__field user__logoutbtn">
             {this.logoutBtn()}
           </div>
@@ -152,4 +198,5 @@ ProfileCard.propTypes = {
   name: PropTypes.string,
   about: PropTypes.string,
   favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+  deleteUser: PropTypes.func.isRequired,
 };

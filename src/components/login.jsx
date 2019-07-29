@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,7 +8,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import cookie from 'react-cookies';
 import PropTypes from 'prop-types';
-import { setUser } from '../store/user/actions';
 import config from '../config';
 
 export default class LoginPopup extends Component {
@@ -40,7 +38,7 @@ export default class LoginPopup extends Component {
     fetch(`${config.apiUrl}/users/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
       body: formBody,
     })
@@ -62,7 +60,6 @@ export default class LoginPopup extends Component {
           this.setState({ wrongLogin: true, error: json.msg });
         }
         if (json.token) {
-          debugger
           this.props.setUser(json.user);
           cookie.save('token', json.token, { path: '/' });
           this.props.onClose(true);
@@ -109,17 +106,21 @@ export default class LoginPopup extends Component {
                 fullWidth
               />
             </DialogContent>
-            <DialogActions>
-              <span className="error">{this.state.error}</span>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleChange} color="primary">
-                Register
-              </Button>
-              <Button type="submit" color="primary">
-                Login
-              </Button>
+            <DialogActions className="popup__buttons">
+              <div className="popup__secondary">
+                <Button onClick={this.handleChange} color="primary">
+                  Register
+                </Button>
+              </div>
+              <div className="popup__control">
+                <span className="error">{this.state.error}</span>
+                <Button onClick={this.handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button type="submit" color="primary">
+                  Login
+                </Button>
+              </div>
             </DialogActions>
           </form>
         </Dialog>
@@ -131,4 +132,5 @@ export default class LoginPopup extends Component {
 LoginPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
   onRegister: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };

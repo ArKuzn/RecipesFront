@@ -11,7 +11,6 @@ class RecipePage extends Component {
     super(props);
     this.state = {
       recipe: {},
-      favorites: [],
       user: 0,
     };
   }
@@ -48,12 +47,11 @@ class RecipePage extends Component {
     const token = cookie.load('token');
     let favorite = false;
     for (let recipeid in this.props.user.favorites) {
-      if (this.state.recipe.id == this.props.user.favorites[recipeid]) {
+      if (this.state.recipe.id == this.props.user.favorites[recipeid].id) {
         favorite = true;
         break
       }
     }
-    debugger
     const result = (
       <Recipe
         title={this.state.recipe.title}
@@ -65,6 +63,7 @@ class RecipePage extends Component {
         duration={this.state.recipe.duration}
         token={token}
         favorite={favorite}
+        favoriteCount={this.state.recipe.favoritesTable}
         difficult={this.state.recipe.difficult}
         calories={this.state.recipe.calories}
         user={this.state.user}

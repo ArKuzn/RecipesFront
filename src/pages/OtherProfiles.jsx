@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Total from '../components/Header';
 import ProfileCard from '../components/profileCard';
 import config from '../config';
+import { setUser, deleteUser } from '../store/user/actions';
 
-export default class OtherProfiles extends React.Component {
+class OtherProfiles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +19,7 @@ export default class OtherProfiles extends React.Component {
   componentDidMount() {
     let url;
     if (this.props.match.params.id) {
-      url = new URL(`${config.apiUrl}/users/${this.props.match.params.id}`)
+      url = new URL(`${config.apiUrl}/users/${this.props.match.params.id}`);
     }
     fetch(url, { method: 'GET' })
       .then((response) => {
@@ -28,7 +30,7 @@ export default class OtherProfiles extends React.Component {
       })
       .then((json) => {
         if (!json.error) {
-          this.setState({ showProfile: true, profile: json });
+          this.setState({ showProfile: true, profile: json.user });
         } else {
           this.setState({ error: json.msg });
         }
@@ -50,11 +52,15 @@ export default class OtherProfiles extends React.Component {
             {...this.state.profile}
             logout={this.state.logout}
             deleteAccount={this.state.deleteAccount}
+            favorites={this.state.profile.favoritesTable}
           />
         </div>
       );
     }
-    return this.state;
+    if (this.state.error) {
+      return (this.state.error);
+    }
+    return null;
   }
 
   render() {
@@ -66,3 +72,18 @@ export default class OtherProfiles extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    user: state.userStore.user,
+  };
+};
+const mapDispatchToProps = {
+  setUser,
+  deleteUser,
+};
+const enchancer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default enchancer(OtherProfiles);

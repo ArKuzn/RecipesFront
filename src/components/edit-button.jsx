@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'react-cookies';
 import PropTypes from 'prop-types';
 
 export default class EditButton extends React.Component {

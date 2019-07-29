@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import cookie from 'react-cookies';
 import { Box } from '@material-ui/core';
 import ControllerLoginPopup from './dialoglogincontrol';
 import PrivatComponent from './privat-component';

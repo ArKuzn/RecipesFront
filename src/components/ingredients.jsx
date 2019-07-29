@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 
 let counterId = 0;
 
@@ -106,7 +107,7 @@ export default class IngredientsInputs extends Component {
               // autoFocus
               onBlur={this.BlurController}
               onFocus={this.FocusController}
-              onChange={(e) => { this.onChangeInput(e, ingredient) }}
+              onChange={(e) => { this.onChangeInput(e, ingredient); }}
             />
           );
         })}
@@ -122,3 +123,6 @@ export default class IngredientsInputs extends Component {
     );
   }
 }
+IngredientsInputs.propTypes = {
+  onBack: PropTypes.func.isRequired,
+};

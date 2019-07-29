@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Carousel } from 'react-responsive-carousel';
 import Total from '../components/Header';
-import Recipeitem from '../components/minirecipe';
+import CarouselRecipe from '../components/carousel-recipe';
 import config from '../config';
 // import config from "../config";
 export default class Home extends Component {
@@ -12,7 +13,11 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    fetch(`${config.apiUrl}/recipes/filter`, { method: 'GET' })
+    const orderField = 'id';
+    const params = { order_field: orderField };
+    const url = new URL(`${config.apiUrl}/recipes/filter`);
+    url.search = new URLSearchParams(params);
+    fetch(url, { method: 'GET' })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -29,16 +34,20 @@ export default class Home extends Component {
 
   showRecipes = () => {
     const Recipes = [];
-    for (let i = 0; i < this.state.recipes.length; i += 1) {
+    for (let i = this.state.recipes.length - 1; i > this.state.recipes.length - 12 && i > 0; i -= 1) {
       Recipes.push(
-        <Recipeitem
+        <CarouselRecipe
           title={this.state.recipes[i].title}
           images={this.state.recipes[i].images}
-          ingredients={this.state.recipes[i].ingredients}
-          steps={this.state.recipes[i].steps}
+          ingredients={this.state.recipes[i].ingredientsTable}
+          steps={this.state.recipes[i].stepItem}
           id={this.state.recipes[i].id}
-          author={this.state.recipes[i].author}
-          duration={this.state.recipes[i].author}
+          author={this.state.recipes[i].author_user.login}
+          authorId={this.state.recipes[i].author}
+          duration={this.state.recipes[i].duration}
+          difficult={this.state.recipes[i].difficult}
+          favoriteCount={this.state.recipes[i].favoritesTable.length}
+          {...this.props}
         />,
       );
     }
@@ -50,7 +59,10 @@ export default class Home extends Component {
       <div>
         <Total />
         <h2>Home</h2>
-        {this.showRecipes()}
+        <h3>Last Recipes</h3>
+        <Carousel centerMode interval={2500} selectedItem={3} centerSlidePercentage={35} emulateTouch showThumbs={false} autoPlay infiniteLoop className="home__carousel" showStatus={false} showIndicators={false}>
+          {this.showRecipes()}
+        </Carousel>
       </div>
     );
   }

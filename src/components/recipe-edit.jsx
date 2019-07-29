@@ -71,16 +71,6 @@ export default class RecipeEdit extends React.Component {
     steps.length -= 1;
     ingredients = ingredients.join('|');
     steps = steps.join('|');
-    // let params = {
-    //   title: event.target.elements["title"].value,
-    //   calories: event.target.elements["calories"].value,
-    //   difficult: event.target.elements["difficult"].value,
-    //   duration: event.target.elements["duration"].value,
-    //   ingredients: ingredients,
-    //   steps: steps,
-    //   token: cookie.load('token')
-    // };
-    // debugger
     const formData = new FormData();
     for (let fileId in files) {
       formData.append('images', files[fileId]);

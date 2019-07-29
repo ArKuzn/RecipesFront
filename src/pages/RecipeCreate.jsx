@@ -5,16 +5,6 @@ import CreateRecipeForm from '../components/recipe-creator-form';
 import config from '../config';
 
 export default class RecipeCreate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showPage: false,
-      logout: false,
-      token: true,
-      update: false,
-    };
-  }
-
   Back = () => {
     return this.props.history.push('/');
   }
@@ -47,15 +37,6 @@ export default class RecipeCreate extends React.Component {
     steps.length -= 1;
     ingredients = ingredients.join('|');
     steps = steps.join('|');
-    const params = {
-      title: event.target.elements['title'].value,
-      calories: event.target.elements['calories'].value,
-      difficult: event.target.elements['difficult'].value,
-      duration: event.target.elements['duration'].value,
-      ingredients,
-      steps,
-      token: cookie.load('token'),
-    };
     let formData = new FormData();
     for (let fileId in files) {
       formData.append("images", files[fileId]);
@@ -84,6 +65,7 @@ export default class RecipeCreate extends React.Component {
         if (!json.err_field) {
           return this.props.history.push('/');
         }
+        return null;
       })
       .catch((error) => {
         console.log(error);
@@ -100,5 +82,3 @@ export default class RecipeCreate extends React.Component {
     );
   }
 }
-
-// export default withRouter(RecipeCreate)
