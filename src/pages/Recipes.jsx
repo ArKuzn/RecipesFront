@@ -6,7 +6,7 @@ import Total from '../components/Header';
 import Recipeitem from '../components/minirecipe';
 import Filter from '../components/filter';
 import { setUser } from '../store/user/actions';
-import Pagenathion from '../components/pagenation';
+import Paginathion from '../components/pagination';
 
 class Recipes extends Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class Recipes extends Component {
         <Box className="body__list" display="flex" flexDirection="row" justifyContent="space-beetwen" flexWrap="wrap">
           {Recipes}
         </Box>
-        <Pagenathion
+        <Paginathion
           activePage={this.state.activePage - 1}
           pages={this.state.pages}
           clicktoPage={this.handlerPage}

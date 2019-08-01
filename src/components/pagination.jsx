@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Pagenathion extends Component {
+export default class Paginathion extends Component {
   showPages = (pages, activePage) => {
     const result = [];
     for (let i = 0; i < pages; i += 1) {
@@ -30,7 +30,8 @@ export default class Pagenathion extends Component {
     );
   }
 }
-Pagenathion.propTypes = {
+Paginathion.propTypes = {
   pages: PropTypes.number.isRequired,
   activePage: PropTypes.number.isRequired,
+  clicktoPage: PropTypes.func.isRequired,
 };
