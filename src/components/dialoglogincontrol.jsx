@@ -16,8 +16,6 @@ class ControllerLoginPopup extends Component {
   }
 
   handleClickOpen = () => {
-    // this.state.setOpen(true);
-    // this.setState({ setOpen: true });
     this.setState({ login: true });
   };
 
@@ -33,29 +31,35 @@ class ControllerLoginPopup extends Component {
     this.setState({ register: false, login: true });
   }
 
-  controller = () => {
-    if (this.state.login) {
+  controller = ({ login, register }) => {
+    if (login) {
       return (
-        <LoginPopup onClose={this.handleClose} onRegister={this.handleChangetoRegister} {...this.props} />
+        <LoginPopup
+          onClose={this.handleClose}
+          onRegister={this.handleChangetoRegister}
+          {...this.props}
+        />
       );
     }
-    if (this.state.register) {
+    if (register) {
       return (
-        <RegisterPopup onClose={this.handleClose} onLogin={this.handleChangetoLogin} {...this.props} />
+        <RegisterPopup
+          onClose={this.handleClose}
+          onLogin={this.handleChangetoLogin}
+          {...this.props}
+        />
       );
     }
     return null;
   }
 
   render() {
-    // const [open, setOpen] = React.useState(false);
     return (
       <div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
           Login/Register
         </Button>
-        {this.controller()}
-
+        {this.controller(this.state)}
       </div>
     );
   }

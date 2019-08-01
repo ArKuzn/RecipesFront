@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import { Redirect, Link } from 'react-router-dom';
 import cookie from 'react-cookies';
 import PropTypes from 'prop-types';
@@ -11,7 +10,6 @@ export default class ProfileCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // setOpen: false
       Auth: true,
     };
   }
@@ -48,7 +46,6 @@ export default class ProfileCard extends Component {
     for (let index in this.props.favorites) {
       favorites.push(
         <Link className="user__favorites-link" to={`/recipes/${this.props.favorites[index].id}`}>
-          {/* Recipe */}
           {this.props.favorites[index].title}
         </Link>
       );

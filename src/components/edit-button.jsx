@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export default class EditButton extends React.Component {
-  showPage = () => {
-    if (this.props.active) {
+  showPage = ({ active, onEdit }) => {
+    if (active) {
       return (
-        <button type="button" onClick={() => { this.props.onEdit(true); }}>Edit</button>
+        <button type="button" onClick={() => { onEdit(true); }}>Edit</button>
       );
     }
     return null;
@@ -14,12 +13,8 @@ export default class EditButton extends React.Component {
   render() {
     return (
       <div>
-        {this.showPage()}
+        {this.showPage(this.props)}
       </div>
     );
   }
 }
-EditButton.propTypes = {
-  onEdit: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
-};

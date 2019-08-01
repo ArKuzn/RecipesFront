@@ -27,8 +27,6 @@ export default class Total extends Component {
     return (
       <Box display="flex" flexDirection="row" className="header">
         <div className="head__link"><Link activeClassName="active" className="header__item-a" to="/">Home</Link></div>
-        {/* {this.ProfileController()} */}
-        {/* {this.CheckAuth(this.CreateController())} */}
         <PrivatComponent component={this.ProfileController} HandlerUnAuth={this.LoginPopup} />
         <PrivatComponent component={this.CreateController} />
         <div className="head__link">

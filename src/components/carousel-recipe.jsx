@@ -6,29 +6,35 @@ import IngredientsShow from './show-ingredients';
 import config from '../config';
 
 export default class CarouselRecipe extends Component {
-  componentDidMount() {
-    this.setState({ favorite: this.props.favorite });
-  }
-
   render() {
-    // debugger
+    const {
+      images,
+      id,
+      title,
+      ingredients,
+      difficult,
+      duration,
+      steps,
+      favoriteCount,
+      authorId,
+      author } = this.props;
     return (
       <Slide in="true" direction="left" mountOnEnter unmountOnExit>
         <Box display="flex" flexDirection="row" className="list__name">
           <div className="carousel__image">
-            <img className="carousel__image-img" src={`${config.apiUrl}/${this.props.images[0]}`} alt="index img" />
+            <img className="carousel__image-img" src={`${config.apiUrl}/${images[0]}`} alt="index img" />
           </div>
           <div className="carousel__content">
             <div className="carousel__content-recipeId">
               <p className="carousel__content-name-p">
                 Recipe
-                {this.props.id}
+                {id}
               </p>
             </div>
             <div className="carousel__content-name">
               <p className="carousel__content-name-p">
-                <Link class="carousel__content-name-p-a" to={`recipes/${this.props.id}`}>
-                  {this.props.title}
+                <Link class="carousel__content-name-p-a" to={`recipes/${id}`}>
+                  {title}
                 </Link>
               </p>
             </div>
@@ -36,19 +42,19 @@ export default class CarouselRecipe extends Component {
               <span className="carousel__content-ingredients-span">
                 Ingredients: &nbsp;
               </span>
-              <IngredientsShow ingredients={this.props.ingredients} />
+              <IngredientsShow ingredients={ingredients} />
             </Box>
             <div className="carousel__content-difficulty">
               <span className="carousel__content-difficulty-span">
                 Difficult:&nbsp;
-                {this.props.difficult}
+                {difficult}
               </span>
               <div className="'rait_'+difficult aside__rating aside__rating" />
             </div>
             <div className="carousel__content-duration">
               <span className="carousel__content-duration-span">
                 Duration:&nbsp;
-                {this.props.duration}
+                {duration}
                 h.
               </span>
             </div>
@@ -56,22 +62,23 @@ export default class CarouselRecipe extends Component {
             <div className="carousel__content-description">
               <span className="carousel__content-description-span">
                 Steps:&nbsp;
-                {this.props.steps[0]
-                  ? this.props.steps[0].text
+                {steps[0]
+                  ? steps[0].text
                   : 'None'}
               </span>
             </div>
             <div className="carousel__content-author">
               <span className="carousel__content-author-link">
                 Author:&nbsp;
-                <Link class="carousel__content-name-p-a" to={`profile/${this.props.authorId}`}>
-                  {this.props.author}
+                <Link class="carousel__content-name-p-a" to={`profile/${authorId}`}>
+                  {author}
                 </Link>
               </span>
             </div>
             <div className="carousel__content">
               <span className="carousel__content">
-                Favorites count:&nbsp;{+this.props.favoriteCount}
+                Favorites count:&nbsp;
+                {+favoriteCount}
               </span>
             </div>
           </div>
@@ -95,6 +102,7 @@ CarouselRecipe.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   difficult: PropTypes.string.isRequired,
   duration: PropTypes.string.isRequired,
-  favorite: PropTypes.bool.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authorId: PropTypes.number.isRequired,
+  favoriteCount: PropTypes.number.isRequired,
 };

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import cookie from 'react-cookies';
 import config from '../config';
 
 export default class FavoriteButton extends Component {
-  ClickHandler = () => {
+  ClickHandler = ({ setUser, id }) => {
     let formBody = [];
     const token = cookie.load('token');
     formBody.push(`token=${token}`);
     formBody = formBody.join('&');
-    fetch(`${config.apiUrl}/recipes/favorite/${this.props.id}`, {
+    fetch(`${config.apiUrl}/recipes/favorite/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -24,7 +23,7 @@ export default class FavoriteButton extends Component {
       })
       .then((json) => {
         if (!json.error) {
-          this.props.setUser({ favorites: json.favorites });
+          setUser({ favorites: json.favorites });
         }
       })
       .catch((error) => {
@@ -32,12 +31,12 @@ export default class FavoriteButton extends Component {
       });
   }
 
-  favoriteButton = () => {
-    const text = (this.props.favorite) ? 'remove from favorite' : 'add to favorite';
+  favoriteButton = ({ favorite }) => {
+    const text = (favorite) ? 'remove from favorite' : 'add to favorite';
     return (
       <div className="item__text-favorite">
         <p className="item__text-name-p">
-          <button type="button" onClick={this.ClickHandler}>{text}</button>
+          <button type="button" onClick={() => this.ClickHandler(this.props)}>{text}</button>
         </p>
       </div>
     );
@@ -47,13 +46,8 @@ export default class FavoriteButton extends Component {
     // debugger
     return (
       <div>
-        {this.favoriteButton()}
+        {this.favoriteButton(this.props)}
       </div>
     );
   }
 }
-FavoriteButton.propTypes = {
-  favorite: PropTypes.bool.isRequired,
-  id: PropTypes.number.isRequired,
-  setUser: PropTypes.func.isRequired,
-};

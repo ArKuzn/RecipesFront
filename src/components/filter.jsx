@@ -10,12 +10,14 @@ export default class Filter extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.state = {
       ingredients: {},
+      page: 1,
+      allpages: 1,
     };
     this.form = React.createRef();
   }
 
   componentDidMount() {
-    this.setState(() => {
+    this.setState({ page: this.props.page }, () => {
       Helpers.httpRequest(
         `${config.apiUrl}/recipes/ingredients`,
         'GET',
@@ -25,11 +27,18 @@ export default class Filter extends Component {
           this.setState({
             ingredients: response.recipes,
           });
+          this.handleSubmit();
         })
         .catch((error) => {
           console.log(error);
         });
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.page !== prevProps.page) {
+      this.handleSubmit({ target: this.form.current }, this.props.page);
+    }
   }
 
   showImages = () => {
@@ -60,27 +69,35 @@ export default class Filter extends Component {
   handleInput = (event) => {
     const form = {};
     form.target = event.target.form;
+    this.setState({ page: 1 });
     this.handleSubmit(form);
-    console.log(this.form.current);
   };
 
-  handleSubmit(event) {
-    let ingredients = '';
-    for (let i = 3; i < event.target.length; i += 1) {
-      if (event.target[i].checked) {
-        ingredients += `${event.target[i].value}-`;
+  handleSubmit(event, page) {
+    // debugger
+    let params = {};
+    try {
+      let ingredients = '';
+      for (let i = 3; i < event.target.length; i += 1) {
+        if (event.target[i].checked) {
+          ingredients += `${event.target[i].value}-`;
+        }
       }
-    }
-    ingredients = ingredients.substr(0, ingredients.length - 1);
-    const orderField = event.target.elements['rank'].value.split('-')[0];
-    const direction = event.target.elements['rank'].value.split('-')[1];
-    let duration = '';
-    if (event.target.elements['durationFrom'].value || event.target.elements['durationTo'].value) {
-      duration = `${event.target.elements['durationFrom'].value || '1'}-${event.target.elements['durationTo'].value || '99'}`;
+      ingredients = ingredients.substr(0, ingredients.length - 1);
+      const orderField = event.target.elements['rank'].value.split('-')[0];
+      const direction = event.target.elements['rank'].value.split('-')[1];
+      let duration = '';
+      if (event.target.elements['durationFrom'].value || event.target.elements['durationTo'].value) {
+        duration = `${event.target.elements['durationFrom'].value || '1'}-${event.target.elements['durationTo'].value || '99'}`;
+      }
+      params = { ingredients, order_field: orderField, direction, duration };
+    } catch (err) {
+      console.log('form not initialieted');
     }
 
-    const params = { ingredients, order_field: orderField, direction, duration };
-
+    if (page) {
+      params.page = page;
+    }
     const url = new URL(`${config.apiUrl}/recipes/filter`);
     url.search = new URLSearchParams(params);
     fetch(url, { method: 'GET' })
@@ -93,15 +110,16 @@ export default class Filter extends Component {
         throw new Error("Network response was not ok");
       })
       .then((json) => {
-        // debugger
-        this.props.onApplyFilter(json);
+        if (!page) {
+          this.setState({ allpages: json.length / 10 });
+          this.handleSubmit(event || '', this.state.page);
+        } else {
+          this.props.onApplyFilter(json, this.state.allpages, page);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
-
-    // event.preventDefault();
-    // this.form.current.preventDefault();
     try {
       event.preventDefault();
     } catch (err) {

@@ -32,8 +32,8 @@ export default class LoginPopup extends Component {
     this.setState({ wrongLogin: false, wrongPass: false, error: '' });
     event.preventDefault();
     let formBody = [];
-    formBody.push(`login=${event.target.elements['login'].value}`);
-    formBody.push(`password=${event.target.elements['password'].value}`);
+    formBody.push(`login=${event.target.elements.login.value}`);
+    formBody.push(`password=${event.target.elements.password.value}`);
     formBody = formBody.join('&');
     fetch(`${config.apiUrl}/users/login`, {
       method: 'POST',

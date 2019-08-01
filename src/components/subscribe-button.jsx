@@ -42,7 +42,8 @@ class SubscribeButton extends Component {
       })
       .then(async (json) => {
         if (!json.error) {
-          const subscribs = { json };
+          // const subscribs = json.subscribs;
+          const { subscribs } = json;
           this.props.setUser({ subscribs });
           this.setState({ subscribe: !this.state.subscribe });
           console.log(this.props.id);

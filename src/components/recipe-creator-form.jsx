@@ -10,7 +10,6 @@ export default class CreateRecipeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // setOpen: false
       files: [],
       stepsimages: [],
       submitText: 'Create',
@@ -19,14 +18,13 @@ export default class CreateRecipeForm extends Component {
 
   componentDidMount() {
     // debugger
-    // alert('lol')
     if (this.props.title) {
       this.setState({ submitText: 'Edit' });
     }
   }
 
   handleSubmit = (event) => {
-    this.props.onSubmit(event, this.state.files, this.state.stepsimages);//  RecipeCreate.jsx //  recipe-edit.jsx
+    this.props.onSubmit(event, this.state.files, this.state.stepsimages);
   }
 
   handleClose = () => {
@@ -44,6 +42,14 @@ export default class CreateRecipeForm extends Component {
   }
 
   render() {
+    const {
+      title,
+      ingredients,
+      difficult,
+      duration,
+      steps,
+      calories,
+    } = this.props;
     return (
       <form className="Recipe_creator__form" onSubmit={this.handleSubmit}>
         <DropzoneArea
@@ -54,7 +60,7 @@ export default class CreateRecipeForm extends Component {
           id="title"
           label="Title"
           type="text"
-          defaultValue={this.props.title}
+          defaultValue={title}
           required
           className="create__form-input"
         />
@@ -63,7 +69,7 @@ export default class CreateRecipeForm extends Component {
           id="calories"
           label="Calories"
           type="number"
-          defaultValue={this.props.calories}
+          defaultValue={calories}
           className="create__form-input"
         />
         <TextField
@@ -71,7 +77,7 @@ export default class CreateRecipeForm extends Component {
           id="difficult"
           label="Difficult"
           type="number"
-          defaultValue={this.props.difficult}
+          defaultValue={difficult}
           className="create__form-input"
         />
         <TextField
@@ -79,14 +85,14 @@ export default class CreateRecipeForm extends Component {
           id="duration"
           label="Duration"
           type="number"
-          defaultValue={this.props.duration}
+          defaultValue={duration}
           className="create__form-input"
         />
         <IngredientsInputs
-          ingredients={this.props.ingredients}
+          ingredients={ingredients}
         />
         <StepsInputs
-          steps={this.props.steps}
+          steps={steps}
           onUploadStepImage={this.handleUploadStepImage}
         />
         <Button onClick={this.handleClose} color="primary">

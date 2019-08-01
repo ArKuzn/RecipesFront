@@ -94,17 +94,14 @@ export default class IngredientsInputs extends Component {
       <div className="create__ingredients">
         {this.state.ingredients.map((ingredient, index) => {
           return (
-
             <TextField
-              required={index == 0 ? true : false}
+              required={index === 0}
               className="create__ingredients-input"
               value={ingredient.value}
               margin="dense"
               key={ingredient.key}
               id={ingredient.id}
               label={`Ingredient ${index + 1}`}
-              // type="text"
-              // autoFocus
               onBlur={this.BlurController}
               onFocus={this.FocusController}
               onChange={(e) => { this.onChangeInput(e, ingredient); }}

@@ -9,24 +9,34 @@ import config from '../config';
 
 export default class Recipeitem extends Component {
   render() {
-    // debugger
+    const {
+      images,
+      id,
+      title,
+      ingredients,
+      difficult,
+      duration,
+      steps,
+      favoriteCount,
+      authorId,
+      author } = this.props;
     return (
       <Slide in="true" direction="up" mountOnEnter unmountOnExit>
         <Box display="flex" flexDirection="row" className="list__name">
           <div className="item__image">
-            <img className="item__image-img" src={`${config.apiUrl}/${this.props.images[0]}`} alt="index img" />
+            <img className="item__image-img" src={`${config.apiUrl}/${images[0]}`} alt="index img" />
           </div>
           <div className="item__content">
             <div className="item__content-recipeId">
               <p className="item__content-name-p">
                 Recipe
-                {this.props.id}
+                {id}
               </p>
             </div>
             <div className="item__content-name">
               <p className="item__content-name-p">
-                <Link class="item__content-name-p-a" to={`recipes/${this.props.id}`}>
-                  {this.props.title}
+                <Link class="item__content-name-p-a" to={`recipes/${id}`}>
+                  {title}
                 </Link>
               </p>
             </div>
@@ -36,19 +46,19 @@ export default class Recipeitem extends Component {
               <span className="item__content-ingredients-span">
                 Ingredients: &nbsp;
               </span>
-              <IngredientsShow ingredients={this.props.ingredients} />
+              <IngredientsShow ingredients={ingredients} />
             </Box>
             <div className="item__content-difficulty">
               <span className="item__content-difficulty-span">
                 Difficult:&nbsp;
-                {this.props.difficult}
+                {difficult}
               </span>
               <div className="'rait_'+difficult aside__rating aside__rating" />
             </div>
             <div className="item__content-duration">
               <span className="item__content-duration-span">
                 Duration:&nbsp;
-                {this.props.duration}
+                {duration}
                 h.
               </span>
             </div>
@@ -56,23 +66,23 @@ export default class Recipeitem extends Component {
             <div className="item__content-description">
               <span className="item__content-description-span">
                 Steps:&nbsp;
-                {this.props.steps[0]
-                  ? this.props.steps[0].text
+                {steps[0]
+                  ? steps[0].text
                   : 'None'}
               </span>
             </div>
             <div className="item__content-author">
               <span className="item__content-author-link">
                 Author:&nbsp;
-                <Link class="item__content-name-p-a" to={`profile/${this.props.authorId}`}>
-                  {this.props.author}
+                <Link class="item__content-name-p-a" to={`profile/${authorId}`}>
+                  {author}
                 </Link>
               </span>
             </div>
             <div className="item__content">
               <span className="item__content">
                 Favorites count:&nbsp;
-                {+this.props.favoriteCount}
+                {+favoriteCount}
               </span>
             </div>
           </div>
@@ -89,6 +99,7 @@ export default class Recipeitem extends Component {
   }
 }
 Recipeitem.propTypes = {
+  favoriteCount: PropTypes.number.isRequired,
   token: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
@@ -99,4 +110,5 @@ Recipeitem.propTypes = {
   duration: PropTypes.string.isRequired,
   favorite: PropTypes.bool.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authorId: PropTypes.number.isRequired,
 };

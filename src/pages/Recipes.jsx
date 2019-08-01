@@ -6,30 +6,17 @@ import Total from '../components/Header';
 import Recipeitem from '../components/minirecipe';
 import Filter from '../components/filter';
 import { setUser } from '../store/user/actions';
-import config from '../config';
+import Pagenathion from '../components/pagenation';
 
 class Recipes extends Component {
   constructor(props) {
     super(props);
     this.state = {
       recipes: {},
+      page: 1,
+      pages: 1,
+      activePage: 0,
     };
-  }
-
-  componentDidMount() {
-    fetch(`${config.apiUrl}/recipes/filter`, { method: 'GET' })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Network response was not ok');
-      })
-      .then((json) => {
-        this.setState({ recipes: json });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   showRecipes = () => {
@@ -62,16 +49,25 @@ class Recipes extends Component {
     }
     return (
       <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around" flexWrap="wrap" alignItems="center">
-        <Filter onApplyFilter={this.handleFilter} />
+        <Filter onApplyFilter={this.handleFilter} page={this.state.page} />
         <Box className="body__list" display="flex" flexDirection="row" justifyContent="space-beetwen" flexWrap="wrap">
           {Recipes}
         </Box>
+        <Pagenathion
+          activePage={this.state.activePage - 1}
+          pages={this.state.pages}
+          clicktoPage={this.handlerPage}
+        />
       </Box>
     );
   }
 
-  handleFilter = (recipes) => {
-    this.setState({ recipes });
+  handleFilter = (recipes, pages, page) => {
+    this.setState({ recipes, pages, activePage: page, page });
+  }
+
+  handlerPage = (page) => {
+    this.setState({ page });
   }
 
   render() {

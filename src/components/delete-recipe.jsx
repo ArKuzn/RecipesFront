@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cookie from 'react-cookies';
 import config from '../config';
 
 export default class DeleteRecipe extends React.Component {
-
-  delete = () => {
-    const url = new URL(`${config.apiUrl}/recipes/${this.props.id}`);
+  delete = ({ id, onDeleted }) => {
+    const url = new URL(`${config.apiUrl}/recipes/${id}`);
     const params = { token: cookie.load('token') };
     url.search = new URLSearchParams(params);
     fetch(url, {
@@ -20,7 +18,7 @@ export default class DeleteRecipe extends React.Component {
       })
       .then((json) => {
         if (!json.error) {
-          this.props.onDeleted(true);
+          onDeleted(true);
         }
       })
       .catch((error) => {
@@ -28,22 +26,14 @@ export default class DeleteRecipe extends React.Component {
       });
   };
 
-  showButton = () => {
-    if (this.props.active) {
-      return <button type="button" onClick={this.delete}>Delete recipe</button>;
+  showButton = ({ active }) => {
+    if (active) {
+      return <button type="button" onClick={() => this.delete(this.props)}>Delete recipe</button>;
     }
     return null;
   };
 
   render() {
-    return <div>{this.showButton()}</div>;
+    return <div>{this.showButton(this.props)}</div>;
   }
 }
-DeleteRecipe.propTypes = {
-  onDeleted: PropTypes.func,
-  active: PropTypes.bool,
-};
-DeleteRecipe.defaultProps = {
-  onDeleted: null,
-  active: false,
-};

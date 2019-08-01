@@ -12,12 +12,13 @@ class PrivateComponent extends Component {
       <Route
         {...rest}
         // render={props => this.props.user.login ? <Component {...rest} /> : null
-        render={(props) => this.props.user.login ?
-          <Component {...rest} />
-          :
-          HandlerUnAuth
-            ? <HandlerUnAuth {...rest} />
-            : null
+        render={
+          (props) => this.props.user.login ?
+            <Component {...rest} />
+            :
+            HandlerUnAuth
+              ? <HandlerUnAuth {...rest} />
+              : null
         }
       />
     );
