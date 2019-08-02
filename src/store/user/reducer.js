@@ -13,16 +13,16 @@ const initialState = {
   },
 };
 
-const setUser = (state, action) => {
-  const newUser = action.user;
-  const oldUser = state.user;
-  const test = { ...oldUser, ...newUser };
-  return {
-    ...state,
-    user: test,
+// const setUser = (state, action) => {
+//   const newUser = action.user;
+//   const oldUser = state.user;
+//   const test = { ...oldUser, ...newUser };
+//   return {
+//     ...state,
+//     user: test,
 
-  };
-};
+//   };
+// };
 const deleteUser = (state, action) => {
   const newUser = initialState;
   return {
@@ -34,7 +34,11 @@ const deleteUser = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case user.SET_USER:
-      return setUser(state, action);
+      return {
+        ...state,
+        user: action.user,
+      };
+
     case user.DELETE_USER:
       return deleteUser(state, action);
     default:

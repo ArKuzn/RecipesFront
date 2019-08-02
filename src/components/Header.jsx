@@ -30,6 +30,9 @@ export default class Total extends Component {
         <PrivatComponent component={this.ProfileController} HandlerUnAuth={this.LoginPopup} />
         <PrivatComponent component={this.CreateController} />
         <div className="head__link">
+          <Link activeClassName="active" className="header__item-a" to="/workdates">Work days</Link>
+        </div>
+        <div className="head__link">
           <Link activeClassName="active" className="header__item-a" to="/recipes">Recipes</Link>
         </div>
       </Box>

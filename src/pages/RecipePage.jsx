@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies';
 import { connect } from 'react-redux';
-import Total from '../components/Header';
 import Recipe from '../components/recipe';
 import { setUser } from '../store/user/actions';
 import config from '../config';
@@ -76,7 +75,6 @@ class RecipePage extends Component {
   render() {
     return (
       <div className="body">
-        <Total />
         <h2>Recipes</h2>
         {this.showRecipes()}
       </div>

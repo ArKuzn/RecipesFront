@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Total from '../components/Header';
 import ProfileCard from '../components/profileCard';
 import config from '../config';
 import { setUser, deleteUser } from '../store/user/actions';
@@ -66,7 +65,6 @@ class OtherProfiles extends React.Component {
   render() {
     return (
       <div className="body">
-        <Total />
         {this.showProfile()}
       </div>
     );

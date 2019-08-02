@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Redirect } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import Total from '../components/Header';
 import ProfileCard from '../components/profileCard';
 import UpdateUserForm from '../components/update-user-form';
 import { setUser, deleteUser } from '../store/user/actions';
@@ -124,7 +123,6 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="body">
-        <Total />
         <div className="user__profile">
           {this.showProfile()}
           <div className="update__buttons">

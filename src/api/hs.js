@@ -1,3 +1,26 @@
+// import axios from "axios";
+
+// const WrappedAxios = async ({
+//   url = '',
+//   params = {},
+//   headers = {},
+//   data = {}
+// }) => {
+//   try {
+//     const { data } = await axios({
+//       url: `${}${url}`,
+//       headers: {
+//         ...defaulktHeadrs,
+//         ...headers
+//       }
+//     });
+
+//     return data;
+//   } catch (error) {
+//     throw (error);
+//   }
+// };
+
 const Helpers = {
   // Main wrapper for Fetch API
   httpRequest: (url, method, payload, headers) => {

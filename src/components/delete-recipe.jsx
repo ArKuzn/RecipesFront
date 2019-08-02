@@ -35,5 +35,6 @@ export default class DeleteRecipe extends React.Component {
 
   render() {
     return <div>{this.showButton(this.props)}</div>;
+    // return <div>{this.props.active}</div>;
   }
 }

@@ -36,14 +36,14 @@ class PrivateRoute extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    user: state.userStore.user,
-  };
-};
+const mapStateToProps = state => ({
+  user: state.userStore.user,
+});
+
 const mapDispatchToProps = {
   setUser,
 };
+
 const enchancer = connect(
   mapStateToProps,
   mapDispatchToProps,

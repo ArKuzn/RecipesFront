@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
 import cookie from 'react-cookies';
-import Total from '../components/Header';
 import Recipeitem from '../components/minirecipe';
 import Filter from '../components/filter';
 import { setUser } from '../store/user/actions';
@@ -50,9 +49,9 @@ class Recipes extends Component {
     return (
       <Box className="body__list" display="flex" flexDirection="column" justifyContent="space-around" flexWrap="wrap" alignItems="center">
         <Filter onApplyFilter={this.handleFilter} page={this.state.page} />
-        <Box className="body__list" display="flex" flexDirection="row" justifyContent="space-beetwen" flexWrap="wrap">
+        <div className="body__list">
           {Recipes}
-        </Box>
+        </div>
         <Paginathion
           activePage={this.state.activePage - 1}
           pages={this.state.pages}
@@ -73,7 +72,6 @@ class Recipes extends Component {
   render() {
     return (
       <div className="body">
-        <Total />
         <h2>Recipes</h2>
         {this.showRecipes()}
       </div>

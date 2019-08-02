@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Link, Redirect } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
-import cookie from 'react-cookies';
 import FavoriteButton from './favorite-button';
 import StepsShow from './stepsShow';
 import RecipeEdit from './recipe-edit';

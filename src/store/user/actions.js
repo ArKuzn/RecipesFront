@@ -12,3 +12,14 @@ export function deleteUser(profile) {
     user: profile,
   };
 }
+
+// export const authorizeCheck = () => {
+//   return async (dispatch) => {
+//     try {
+//       const user = await axios({token:cookie})
+//       dispatch(setUser(user))
+//     } catch (error) {
+
+//     }
+//   }
+// }

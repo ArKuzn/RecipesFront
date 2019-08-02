@@ -1,6 +1,5 @@
 import React from 'react';
 import cookie from 'react-cookies';
-import Total from '../components/Header';
 import CreateRecipeForm from '../components/recipe-creator-form';
 import config from '../config';
 
@@ -75,7 +74,6 @@ export default class RecipeCreate extends React.Component {
   render() {
     return (
       <div>
-        <Total />
         <h2>Create Recipe</h2>
         {this.showPage()}
       </div>

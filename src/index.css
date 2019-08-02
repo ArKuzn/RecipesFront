@@ -364,3 +364,20 @@ height: 282px !important;
     color:#fff;
     margin-right: 10px;
   }
+  .dates__input{
+    margin: 10px;
+  }
+  .Update__form{
+    display: flex;
+    flex-direction: row;
+  }
+  .input-direction{
+    align-self: center;
+  }
+  .body__list {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 331px 331px;
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+}

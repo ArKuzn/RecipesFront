@@ -1,8 +1,12 @@
 
 import React from 'react';
-import { Provider } from 'react-redux';
 import cookie from 'react-cookies';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+
+import config from '../config';
+
 import Home from './home';
 import Profile from './Profile';
 import Recipes from './Recipes';
@@ -13,7 +17,8 @@ import Helpers from '../api/hs';
 import store from '../store/store';
 import { setUser } from '../store/user/actions';
 import PrivateRoute from '../components/private-route';
-import config from '../config';
+import WorkDates from './WorkDates';
+import Total from '../components/Header';
 
 if (cookie.load('token')) {
   // const params = { token: User.payload };
@@ -44,16 +49,29 @@ function App() {
     <Router>
       <div className="body">
         <Provider store={store}>
-          <Route exact path="/" component={Home} />
-          <Route path="/profile/:id" component={OtherProfiles} />
-          <PrivateRoute exact path="/profile" component={Profile} />
-          <Route exact path="/recipes" component={Recipes} />
-          <PrivateRoute exact path="/create" component={RecipeCreate} />
-          <Route path="/recipes/:id" component={RecipePage} />
+          <Total />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/profile/:id" component={OtherProfiles} />
+            <PrivateRoute exact path="/profile" component={Profile} />
+            <Route exact path="/recipes" component={Recipes} />
+            <PrivateRoute exact path="/create" component={RecipeCreate} />
+            <Route exact path="/recipes/:id" component={RecipePage} />
+            <Route exact path="/workdates" component={WorkDates} />
+            <Route path="/" component={() => <Redirect to="/" />} />
+          </Switch>
         </Provider>
       </div>
     </Router>
   );
 }
+
+// const routes = [
+//   {
+//     exact: true,
+//     path: '',
+//     component: null
+//   }
+// ]
 
 export default App;

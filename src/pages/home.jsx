@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import Total from '../components/Header';
 import CarouselRecipe from '../components/carousel-recipe';
 import config from '../config';
-// import config from "../config";
-export default class Home extends Component {
+
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +56,6 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <Total />
         <h2>Home</h2>
         <h3>Last Recipes</h3>
         <Carousel centerMode interval={2500} selectedItem={3} centerSlidePercentage={35} emulateTouch showThumbs={false} autoPlay infiniteLoop className="home__carousel" showStatus={false} showIndicators={false}>
@@ -67,3 +65,6 @@ export default class Home extends Component {
     );
   }
 }
+
+// export default HOC.forLogin(Home);
+export default Home;

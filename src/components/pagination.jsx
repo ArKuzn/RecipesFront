@@ -7,7 +7,7 @@ export default class Paginathion extends Component {
     for (let i = 0; i < pages; i += 1) {
       result.push(
         <span
-          className={(i) == activePage ? `recipes__pages-page-active` : `recipes__pages-page`}
+          className={(i) === activePage ? `recipes__pages-page-active` : `recipes__pages-page`}
           onClick={() => {
             this.props.clicktoPage(i + 1)
           }}>
