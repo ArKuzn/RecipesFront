@@ -60,7 +60,7 @@ export default class StepsInputs extends Component {
     const itemId = item.id.split(' ')[1];
     const stepList = [...this.state.steps]
     for (let stepId in stepList) {
-      if (stepList[stepId].id == itemId) {
+      if (stepList[stepId].id === itemId) {
         stepList.splice(+stepId, 1);
         this.setState({ steps: stepList })
         break;

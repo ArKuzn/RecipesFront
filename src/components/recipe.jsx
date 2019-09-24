@@ -68,11 +68,11 @@ export default class Recipe extends Component {
             </div>
             <DeleteRecipe
               id={this.props.id}
-              active={this.props.author == this.props.user.id}
+              active={this.props.author === this.props.user.id}
               onDeleted={() => { this.setState({ redirect: true }); }}
             />
             <EditButton
-              active={this.props.author == this.props.user.id}
+              active={this.props.author === this.props.user.id}
               onEdit={() => { this.setState({ edit: true }); }}
             />
             {/* <FavoriteButton

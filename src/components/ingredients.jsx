@@ -51,14 +51,14 @@ export default class IngredientsInputs extends Component {
     oldObject.id = `ingredient ${counterId}`;
     this.setState(prevState => ({
       ...prevState,
-      ingredients: [...prevState.ingredients, oldObject]
+      ingredients: [...prevState.ingredients, oldObject],
     }));
   }
 
   deleteIngredient = (item) => {
     const ingredientsList = [...this.state.ingredients]
     for (let ingredientId in ingredientsList) {
-      if (ingredientsList[ingredientId].id == item.id) {
+      if (ingredientsList[ingredientId].id === item.id) {
         ingredientsList.splice(ingredientId, 1);
         this.setState({ ingredients: ingredientsList });
       }

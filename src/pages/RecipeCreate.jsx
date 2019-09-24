@@ -22,10 +22,10 @@ export default class RecipeCreate extends React.Component {
     let steps = [];
     for (let element in event.target.elements) {
       try {
-        if (event.target.elements[element].id.split(" ")[0] == "ingredient") {
+        if (event.target.elements[element].id.split(" ")[0] === "ingredient") {
           ingredients.push(event.target.elements[element].value)
         }
-        if (event.target.elements[element].id.split(" ")[0] == "step") {
+        if (event.target.elements[element].id.split(" ")[0] === "step") {
           steps.push(event.target.elements[element].value)
         }
       } catch (error) {

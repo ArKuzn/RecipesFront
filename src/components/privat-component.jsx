@@ -11,7 +11,6 @@ class PrivateComponent extends Component {
     return (
       <Route
         {...rest}
-        // render={props => this.props.user.login ? <Component {...rest} /> : null
         render={
           (props) => this.props.user.login ?
             <Component {...rest} />

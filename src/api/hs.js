@@ -1,25 +1,5 @@
-// import axios from "axios";
-
-// const WrappedAxios = async ({
-//   url = '',
-//   params = {},
-//   headers = {},
-//   data = {}
-// }) => {
-//   try {
-//     const { data } = await axios({
-//       url: `${}${url}`,
-//       headers: {
-//         ...defaulktHeadrs,
-//         ...headers
-//       }
-//     });
-
-//     return data;
-//   } catch (error) {
-//     throw (error);
-//   }
-// };
+import axios from 'axios';
+import config from '../config';
 
 const Helpers = {
   // Main wrapper for Fetch API
@@ -57,6 +37,43 @@ const Helpers = {
         return json;
       });
   },
+  axiosRequest: async (url, method, payload, headers) => {
+    try {
+      const res = await axios({
+        ...payload,
+        url: `${config.apiUrl}${url}`,
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+      });
+
+      return res;
+    } catch (err) {
+      if (err.response && err.response.status) {
+        const status = err.response.status;
+        if (status === 418) {
+          // console.log('НЕТ ДОСТУПА!!!');
+          window.location.replace('/home');
+        }
+        if (status === 406) {
+          // console.log('ПАРШИВЫЙ ТОКЕН!!!');
+          document.cookie = `token=; path=/; domain=${config.domain};`;
+
+          window.location.replace('/home');
+        }
+      }
+
+      throw err;
+    }
+  },
 };
 
 export default Helpers;
+
+
+// // / 406 - нет пользователя в БД или сломанный токен
+// // / 418 - ошибка доступа
+
+// export default axiosWrapper;

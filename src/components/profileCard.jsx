@@ -59,7 +59,7 @@ export default class ProfileCard extends Component {
       subscribs.push(
         <Link className="field__subscribs-link" to={`/profile/${this.props.subscribs[index].id}`}>
           <div className="field__subscribs-div">
-            <img class="field__subscribs-avatar" src={`${config.apiUrl}/${this.props.subscribs[index].avatar}`} />
+            <img class="field__subscribs-avatar" src={`${config.apiUrl}/${this.props.subscribs[index].avatar}`} alt="subscriber" />
             {this.props.subscribs[index].login}
           </div>
         </Link>
@@ -77,7 +77,7 @@ export default class ProfileCard extends Component {
       followers.push(
         <Link className="field__followers-link" to={`/profile/${this.props.followers[index].id}`}>
           <div className="field__followers-div">
-            <img class="field__followers-avatar" src={`${config.apiUrl}/${this.props.followers[index].avatar}`} />
+            <img class="field__followers-avatar" src={`${config.apiUrl}/${this.props.followers[index].avatar}`} alt="follower" />
             {this.props.followers[index].login}
           </div>
         </Link>

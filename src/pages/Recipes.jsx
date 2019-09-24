@@ -24,7 +24,7 @@ class Recipes extends Component {
     for (let i = 0; i < this.state.recipes.length; i += 1) {
       let favorite = false;
       for (let recipeId in this.props.user.favorites) {
-        if (this.state.recipes[i].id == this.props.user.favorites[recipeId].id) {
+        if (this.state.recipes[i].id === this.props.user.favorites[recipeId].id) {
           favorite = true;
         }
       }

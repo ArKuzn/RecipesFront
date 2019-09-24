@@ -18,14 +18,13 @@ export default class Filter extends Component {
 
   componentDidMount() {
     this.setState({ page: this.props.page }, () => {
-      Helpers.httpRequest(
-        `${config.apiUrl}/recipes/ingredients`,
+      Helpers.axiosRequest(
+        `/recipes/ingredients`,
         'GET',
       )
         .then((response) => {
-          // debugger
           this.setState({
-            ingredients: response.recipes,
+            ingredients: response.data.recipes,
           });
           this.handleSubmit();
         })

@@ -46,7 +46,7 @@ class RecipePage extends Component {
     const token = cookie.load('token');
     let favorite = false;
     for (let recipeid in this.props.user.favorites) {
-      if (this.state.recipe.id == this.props.user.favorites[recipeid].id) {
+      if (this.state.recipe.id === this.props.user.favorites[recipeid].id) {
         favorite = true;
         break
       }
